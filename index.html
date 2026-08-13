@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUHÌ IntelliFarm - Next-Gen Smart Aquaponics</title>
+  
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ==========================================================================
+       APPLE / SAMSUNG LIGHT-MODE THEME & DESIGN SYSTEM
+       ========================================================================== */
+    :root {
+      --bg-main: #fafafa;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --brand-green: #10b981;
+      --brand-green-dark: #059669;
+      --brand-blue: #0284c7;
+      --brand-gradient: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
+      --border-light: rgba(226, 232, 240, 0.8);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==========================================================================
+       SCROLL ANIMATION STYLES (REVEAL ON SCROLL)
+       ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* ==========================================================================
+       NAVIGATION BAR WITH CUSTOMIZABLE bg.png (25% TRANSPARENCY)
+       ========================================================================== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-light);
+      overflow: hidden; /* Contains the background image element */
+    }
+
+    /* Background image overlay layer for header */
+    .header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* CHANGE YOUR HEADER BACKGROUND IMAGE HERE ANYTIME */
+      background-image: url('bg.png'); 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.25; /* 25% Transparency */
+      z-index: -1;   /* Places it behind nav text & logos */
+      pointer-events: none;
+    }
+
+    nav {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 2rem;
+      position: relative;
+      z-index: 1; /* Keeps links above background */
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo img {
+      height: 42px;
+      width: auto;
+      border-radius: 8px;
+    }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text span {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--brand-green-dark);
+    }
+
+    .nav-cta {
+      background: var(--text-primary);
+      color: #fff !important;
+      padding: 0.55rem 1.25rem;
+      border-radius: 50px;
+      transition: var(--transition) !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--brand-green-dark) !important;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      padding: 10rem 2rem 6rem;
+      text-align: center;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.5rem 1.25rem;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--brand-green-dark);
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .hero h1 span {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 780px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 0.95rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--brand-gradient);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-subtle);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       GENERAL SECTIONS & CARDS
+       ========================================================================== */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title p {
+      color: var(--brand-blue);
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--text-primary);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .card i {
+      font-size: 2.2rem;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .card p, .card ul {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+    }
+
+    .card ul {
+      list-style-type: none;
+      margin-top: 0.8rem;
+    }
+
+    .card ul li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card ul li::before {
+      content: "✓";
+      color: var(--brand-green);
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       PRODUCT FEATURE SECTION (AQUASENSE IOT)
+       ========================================================================== */
+    .product-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 4rem 3rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .product-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .product-image-wrapper {
+      position: relative;
+      background: radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      text-align: center;
+      border: 1px solid var(--border-light);
+    }
+
+    .product-image-wrapper img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.12));
+      transition: var(--transition);
+    }
+
+    .product-image-wrapper:hover img {
+      transform: scale(1.03);
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      background: rgba(2, 132, 199, 0.1);
+      color: var(--brand-blue);
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .indicator-list {
+      display: flex;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .status-dot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot.green { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+    .dot.blue { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
+    .dot.yellow { background: #eab308; box-shadow: 0 0 8px #eab308; }
+
+    /* ==========================================================================
+       APP & WEBSITE SHOWCASE SECTION
+       ========================================================================== */
+    .app-showcase {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 4.5rem 3rem;
+      box-shadow: var(--shadow-lg);
+      margin-top: 3rem;
+    }
+
+    .app-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .app-info h3 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .app-info p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .app-preview-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .app-preview-card img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ==========================================================================
+       SPLIT CONTENT SECTION (ABOUT & LOCATION)
+       ========================================================================== */
+    .split-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .split-image img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-light);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-light);
+      padding: 4rem 2rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-section h4 {
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-section p, .footer-section a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .footer-section a:hover {
+      color: var(--brand-green-dark);
+    }
+
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border-light);
+      padding-top: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero h1 { font-size: 2.8rem; }
+      .product-container, .app-container, .split-container { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero { padding-top: 7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION BAR WITH DYNAMIC bg.png BACKGROUND -->
+  <header>
+    <!-- Background overlay at 25% transparency -->
+    <div class="header-bg"></div>
+
+    <nav>
+      <a href="#" class="logo">
+        <img src="logo.png" alt="BUHI IntelliFarm Logo" onerror="this.src='https://via.placeholder.com/42x42/10b981/ffffff?text=B'">
+        <span class="logo-text">BUHÌ <span>IntelliFarm</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#product">Hardware Device</a></li>
+        <li><a href="#app">Cloud Dashboard</a></li>
+        <li><a href="#mission">Vision & Mission</a></li>
+        <li><a href="#commodities">Produce</a></li>
+        <li><a href="https://buhi-test.vercel.app/" target="_blank" class="nav-cta">Launch App <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-badge reveal">
+      <i class="fa-solid fa-microchip"></i> Next-Gen IoT Smart Farm Systems
+    </div>
+    <h1 class="reveal delay-1">Reinventing Agriculture with <span>Intelligent Farming</span></h1>
+    <p class="reveal delay-2"> OOUR STORY - BUHI IntelliFarm idea started when ASF affected our community that led to a considereable number of abandoned pigpens. Having a background of Agricultual and Biosystems Engineering and Computer Science, our team as children of backyard farmers wanted to transform these underutilized and ASF-affected pig pens into biosecure, high-yield aquaponics facilities powered by continuous IoT water telemetry and real-time monitoring devices and automated system.</p>
+    <div class="btn-group reveal delay-3">
+      <a href="#product" class="btn btn-primary"><i class="fa-solid fa-box-open"></i> Discover Hardware</a>
+      <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-desktop"></i> Try Live App</a>
+    </div>
+  </section>
+
+  <!-- PRODUCT SHOWCASE: AQUASENSE IOT HARDWARE -->
+  <section id="product">
+    <div class="product-section reveal">
+      <div class="product-container">
+        <div class="product-image-wrapper">
+          <img src="aquasense.jpg" alt="BUHI AquaSense IoT Hardware Device" onerror="this.src='https://via.placeholder.com/500x500?text=AquaSense+IoT+Device'">
+        </div>
+        <div class="product-details">
+          <span class="badge-pill">IoT HARDWARE UNIT</span>
+          <h2>AquaSense IoT Controller</h2>
+          <p style="color: var(--text-secondary); font-size: 1.05rem; margin-top: 0.8rem;">
+            Our proprietary, ruggedized hardware module designed for industrial and backyard smart farm environments. Equipped with multi-probe sensor arrays and integrated wireless communication modules.
+          </p>
+
+          <div class="indicator-list">
+            <div class="status-dot"><span class="dot green"></span> SYSTEM ON</div>
+            <div class="status-dot"><span class="dot blue"></span> IOT ACTIVE</div>
+            <div class="status-dot"><span class="dot yellow"></span> DATA LOGGING</div>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <div style="display: flex; gap: 12px; margin-bottom: 0.8rem; align-items: center;">
+              <i class="fa-solid fa-wifi" style="color: var(--brand-blue);"></i>
+              <span style="font-weight: 600; font-size: 0.95rem;">Dual Connectivity: WiFi & IoT Antenna</span>
+            </div>
+            <div style="display: flex; gap: 12px; margin-bottom: 0.8rem; align-items: center;">
+              <i class="fa-solid fa-vial-circle-check" style="color: var(--brand-green);"></i>
+              <span style="font-weight: 600; font-size: 0.95rem;">Multi-Sensor Interface (pH, Temp, DO, Water Level)</span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <i class="fa-solid fa-bolt" style="color: var(--brand-blue);"></i>
+              <span style="font-weight: 600; font-size: 0.95rem;">Automated Filtration & Pump Controller Triggers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP & WEBSITE DASHBOARD SHOWCASE -->
+  <section id="app">
+    <div class="app-showcase reveal">
+      <div class="app-container">
+        <div class="app-info">
+          <span style="color: var(--brand-green); font-weight: 800; font-size: 0.85rem; letter-spacing: 1px;">WEB & MOBILE DASHBOARD</span>
+          <h3 style="margin-top: 0.5rem;">Manage Your Farm from Anywhere</h3>
+          <p>Gain total control over water quality parameters, automated pump cycles, and environmental metrics in real-time through our intuitive cloud application[cite: 1].</p>
+          <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-primary">
+            Access Dashboard <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="app-preview-card">
+          <img src="dashboard.jpg" alt="BUHI Web Dashboard Interface" onerror="this.src='https://via.placeholder.com/600x380/0f172a/ffffff?text=BUHI+Web+App+Interface'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT & RATIONALE -->
+  <section id="about">
+    <div class="section-title reveal">
+      <p>BACKGROUND & RATIONALE</p>
+      <h2>An Inspiration from traditional fishing - Parugmon</h2>
+    </div>
+    <div class="split-container">
+      <div class="split-text reveal delay-1">
+        <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+          African Swine Fever (ASF) left vast agricultural structures unused across rural communities[cite: 1]. <strong>BUHÌ IntelliFarm</strong> addresses this crisis by transforming abandoned pig pens into clean, biosecure, intelligent aquaponics installations[cite: 1].
+        </p>
+        <p style="font-size: 1rem; color: var(--text-secondary);">
+          Initiated at <strong>Brgy. Bun-od, Cuartero, Capiz</strong>, our project minimizes labor, optimizes resource consumption, and promotes climate-resilient local food production through automated telemetry[cite: 1].
+        </p>
+      </div>
+      <div class="split-image reveal delay-2">
+        <img src="farm-transformation.png" alt="Pig Pen Rehabilitation" onerror="this.src='https://via.placeholder.com/600x400/f1f5f9/475569?text=Farm+Transformation+Photo'">
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION & MISSION -->
+  <section id="mission">
+    <div class="section-title reveal">
+      <p>OUR STRATEGIC GOALS</p>
+      <h2>Vision & Mission</h2>
+    </div>
+    <div class="grid">
+      <div class="card reveal delay-1">
+        <i class="fa-solid fa-eye"></i>
+        <h3>Our Vision</h3>
+        <p>To establish BUHÌ IntelliFarm as Western Visayas' Premier Research, breeding, and demonstration hub for native freshwater species and sustainable smart agriculture.</p>
+      </div>
+      <div class="card reveal delay-2">
+        <i class="fa-solid fa-bullseye"></i>
+        <h3>Our Mission</h3>
+        <p>To equip smallholder farmers with accessible, scalable IoT technology that improves productivity, reduces manual intervention, and protects local ecosystems.</p>
+      </div>
+      <div class="card reveal delay-3">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h3>Value Proposition</h3>
+        <p>Continuous automated water monitoring, dynamic filtration, and automated refilling ensure pristine conditions for aquatic life and premium crops.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMODITIES & RESEARCH -->
+  <section id="commodities">
+    <div class="section-title reveal">
+      <p>CULTIVATED PRODUCE & FISH</p>
+      <h2>Farm Commodities & Native Species</h2>
+    </div>
+    <div class="grid">
+      <div class="card reveal delay-1">
+        <i class="fa-solid fa-fish-fins"></i>
+        <h3>Native & High-Value Fish</h3>
+        <p>A breeding and research hub for local freshwater species:</p>
+        <ul>
+          <li>Giant Freshwater Prawn (ULANG)</li>
+          <li>Catfish (PANTAT)</li>
+          <li>TILAPIA</li>
+          <li>Native Upland Mudfish (BATOD)</li>
+          <li>Native Upland Carp (KARPA) & Puyo</li>
+          <li>Rami, Bagtis, Puyo, etc</li>
+        </ul>
+      </div>
+      <div class="card reveal delay-2">
+        <i class="fa-solid fa-seedling"></i>
+        <h3>Hydroponic Vegetables</h3>
+        <p>Clean, nutrient-rich produce nourished by recycled aquaponics water[cite: 1]:</p>
+        <ul>
+          <li>Fresh Premium Lettuce</li>
+          <li>Pechay & Kangkong]</li>
+          <li>Culinary & Culinary Herbs</li>
+          <li>Microgreens</li>
+        </ul>
+      </div>
+      <div class="card reveal delay-3">
+        <i class="fa-solid fa-chart-line"></i>
+        <h3>Business Viability</h3>
+        <p>Empowered by funding grants and scalable revenue models:</p>
+        <ul>
+          <li>170% Projected ROI[cite: 1]</li>
+          <li>1.5 - 2 Years Payback Period[cite: 1]</li>
+          <li>Dual Revenue: Greens and Fish Livestock Produce & IoT Device Production/Installation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>BUHI IntelliFarm</h4>
+        <p>IoT-enabled Smart Farm Management System transforming idle agricultural infrastructure into intelligent food production facilities[cite: 1].</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="#about">About Project</a>
+        <a href="#product">AquaSense IoT Unit</a>
+        <a href="https://buhi-test.vercel.app/" target="_blank">Web Dashboard</a>
+        <a href="#mission">Vision & Mission</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact & Channels</h4>
+        <p><i class="fa-solid fa-envelope"></i> buhi.intellifarm@gmail.com</p>
+        <p><i class="fa-solid fa-globe"></i> buhi.intellifarm.com</p>
+        <p><i class="fa-brands fa-facebook"></i> facebook.com/buhi.intellifarm</p>
+      </div>
+      <div class="footer-section">
+        <h4>Location</h4>
+        <p><i class="fa-solid fa-location-dot"></i> Brgy. Bun-od, Cuartero, Capiz, Philippines</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BUHI IntelliFarm. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- SCROLL REVEAL SCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, observerOptions);
+
+      const revealElements = document.querySelectorAll('.reveal');
+      revealElements.forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
