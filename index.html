@@ -70,7 +70,7 @@
     .delay-3 { transition-delay: 0.3s; }
 
     /* ==========================================================================
-       NAVIGATION BAR WITH CUSTOMIZABLE bg.png (25% TRANSPARENCY)
+       HEADER WITH CUSTOMIZABLE bg.png (25% TRANSPARENCY)
        ========================================================================== */
     header {
       position: fixed;
@@ -82,23 +82,22 @@
       -webkit-backdrop-filter: blur(20px);
       z-index: 1000;
       border-bottom: 1px solid var(--border-light);
-      overflow: hidden; /* Contains the background image element */
+      overflow: hidden;
     }
 
-    /* Background image overlay layer for header */
     .header-bg {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      /* CHANGE YOUR HEADER BACKGROUND IMAGE HERE ANYTIME */
+      /* EDIT HEADER BACKGROUND IMAGE HERE */
       background-image: url('bg.png'); 
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       opacity: 0.25; /* 25% Transparency */
-      z-index: -1;   /* Places it behind nav text & logos */
+      z-index: -1;
       pointer-events: none;
     }
 
@@ -110,7 +109,7 @@
       align-items: center;
       padding: 1.1rem 2rem;
       position: relative;
-      z-index: 1; /* Keeps links above background */
+      z-index: 1;
     }
 
     .logo {
@@ -172,12 +171,47 @@
     }
 
     /* ==========================================================================
-       HERO SECTION
+       HERO SECTION WITH BACKGROUND PHOTO
        ========================================================================== */
     .hero {
+      position: relative;
       padding: 10rem 2rem 6rem;
       text-align: center;
-      max-width: 1240px;
+      max-width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* EDIT HERO BACKGROUND PHOTO HERE */
+      background-image: url('hero-bg.png'); 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.15; /* Adjust transparency if needed */
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(250, 250, 250, 0.85) 0%, rgba(250, 250, 250, 0.95) 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -196,9 +230,9 @@
     }
 
     .hero h1 {
-      font-size: 3.8rem;
+      font-size: 3.5rem;
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: -1.5px;
       margin-bottom: 1.5rem;
       color: var(--text-primary);
@@ -211,11 +245,12 @@
     }
 
     .hero p {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       color: var(--text-secondary);
-      max-width: 780px;
+      max-width: 880px;
       margin: 0 auto 2.5rem;
       font-weight: 400;
+      line-height: 1.7;
     }
 
     .btn-group {
@@ -350,7 +385,7 @@
     }
 
     /* ==========================================================================
-       PRODUCT FEATURE SECTION (AQUASENSE IOT)
+       PRODUCT FEATURE SECTION (AQUASENSE HARDWARE)
        ========================================================================== */
     .product-section {
       background: var(--bg-surface);
@@ -472,7 +507,7 @@
     }
 
     /* ==========================================================================
-       SPLIT CONTENT SECTION (ABOUT & LOCATION)
+       SPLIT CONTENT SECTION (PARUGMON / STORY)
        ========================================================================== */
     .split-container {
       display: grid;
@@ -575,31 +610,44 @@
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- HERO SECTION WITH BACKGROUND PHOTO -->
   <section class="hero" id="home">
-    <div class="hero-badge reveal">
-      <i class="fa-solid fa-microchip"></i> Next-Gen IoT Smart Farm Systems
-    </div>
-    <h1 class="reveal delay-1">Reinventing Agriculture with <span>Intelligent Farming</span></h1>
-    <p class="reveal delay-2"> OOUR STORY - BUHI IntelliFarm idea started when ASF affected our community that led to a considereable number of abandoned pigpens. Having a background of Agricultual and Biosystems Engineering and Computer Science, our team as children of backyard farmers wanted to transform these underutilized and ASF-affected pig pens into biosecure, high-yield aquaponics facilities powered by continuous IoT water telemetry and real-time monitoring devices and automated system.</p>
-    <div class="btn-group reveal delay-3">
-      <a href="#product" class="btn btn-primary"><i class="fa-solid fa-box-open"></i> Discover Hardware</a>
-      <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-desktop"></i> Try Live App</a>
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <i class="fa-solid fa-microchip"></i> Next-Gen IoT Smart Farm Systems
+      </div>
+      
+      <h1 class="reveal delay-1">
+        Reinventing Agriculture with <span>Intelligent Farming</span>
+      </h1>
+      
+      <p class="reveal delay-2">
+        <strong>OUR STORY</strong> – BUHI IntelliFarm idea started when ASF affected our community that led to a considereable number of abandoned pigpens. Having a background of Agricultual and Biosystems Engineering and Computer Science, our team as children of backyard farmers wanted to transform these underutilized and ASF-affected pig pens into biosecure, high-yield aquaponics facilities powered by continuous IoT water telemetry and real-time monitoring devices and automated system.
+      </p>
+      
+      <div class="btn-group reveal delay-3">
+        <a href="#product" class="btn btn-primary"><i class="fa-solid fa-box-open"></i> Discover Hardware</a>
+        <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-desktop"></i> Try Live App</a>
+      </div>
     </div>
   </section>
 
-  <!-- PRODUCT SHOWCASE: AQUASENSE IOT HARDWARE -->
+  <!-- HARDWARE SECTION (INSERT hardware-img.png HERE) -->
   <section id="product">
     <div class="product-section reveal">
       <div class="product-container">
         <div class="product-image-wrapper">
-          <img src="aquasense.jpg" alt="BUHI AquaSense IoT Hardware Device" onerror="this.src='https://via.placeholder.com/500x500?text=AquaSense+IoT+Device'">
+          <!-- INSERT YOUR HARDWARE IMAGE BELOW (hardware-img.png) -->
+          <img src="aquasense.jpeg" alt="BUHI AquaSense IoT Hardware Device" onerror="this.src='https://via.placeholder.com/500x500?text=INSERT+hardware-img.png+HERE'">
         </div>
         <div class="product-details">
           <span class="badge-pill">IoT HARDWARE UNIT</span>
           <h2>AquaSense IoT Controller</h2>
           <p style="color: var(--text-secondary); font-size: 1.05rem; margin-top: 0.8rem;">
-            Our proprietary, ruggedized hardware module designed for industrial and backyard smart farm environments. Equipped with multi-probe sensor arrays and integrated wireless communication modules.
+            Our proprietary, ruggedized hardware module designed for industrial and backyard smart farm environments. Equipped with multi-probe sensor arrays and integrated wireless communication modules[cite: 1].
           </p>
 
           <div class="indicator-list">
@@ -619,7 +667,7 @@
             </div>
             <div style="display: flex; gap: 12px; align-items: center;">
               <i class="fa-solid fa-bolt" style="color: var(--brand-blue);"></i>
-              <span style="font-weight: 600; font-size: 0.95rem;">Automated Filtration & Pump Controller Triggers</span>
+              <span style="font-weight: 600; font-size: 0.95rem;">Automated Filtration & Pump Controller Triggers[cite: 1]</span>
             </div>
           </div>
         </div>
@@ -646,7 +694,7 @@
     </div>
   </section>
 
-  <!-- ABOUT & RATIONALE -->
+  <!-- PARUGMON / STORY SECTION (INSERT parugmon-img.png HERE) -->
   <section id="about">
     <div class="section-title reveal">
       <p>BACKGROUND & RATIONALE</p>
@@ -662,7 +710,8 @@
         </p>
       </div>
       <div class="split-image reveal delay-2">
-        <img src="farm-transformation.png" alt="Pig Pen Rehabilitation" onerror="this.src='https://via.placeholder.com/600x400/f1f5f9/475569?text=Farm+Transformation+Photo'">
+        <!-- INSERT YOUR PARUGMON SECTION IMAGE BELOW (parugmon-img.png) -->
+        <img src="parugmon.jpg" alt="Parugmon Pig Pen Rehabilitation" onerror="this.src='https://via.placeholder.com/600x400/f1f5f9/475569?text=INSERT+parugmon-img.png+HERE'">
       </div>
     </div>
   </section>
@@ -682,12 +731,12 @@
       <div class="card reveal delay-2">
         <i class="fa-solid fa-bullseye"></i>
         <h3>Our Mission</h3>
-        <p>To equip smallholder farmers with accessible, scalable IoT technology that improves productivity, reduces manual intervention, and protects local ecosystems.</p>
+        <p>To equip smallholder farmers with accessible, scalable IIoT technology that improves productivity, reduces manual intervention, and protects local ecosystems[cite: 1].</p>
       </div>
       <div class="card reveal delay-3">
         <i class="fa-solid fa-shield-halved"></i>
         <h3>Value Proposition</h3>
-        <p>Continuous automated water monitoring, dynamic filtration, and automated refilling ensure pristine conditions for aquatic life and premium crops.</p>
+        <p>Continuous automated water monitoring, dynamic filtration, and automated refilling ensure pristine conditions for aquatic life and premium crops[cite: 1].</p>
       </div>
     </div>
   </section>
@@ -708,14 +757,14 @@
           <li>Catfish (PANTAT)</li>
           <li>TILAPIA</li>
           <li>Native Upland Mudfish (BATOD)</li>
-          <li>Native Upland Carp (KARPA) & Puyo</li>
+          <li>Native Upland Carp (KARPA)</li>
           <li>Rami, Bagtis, Puyo, etc</li>
         </ul>
       </div>
       <div class="card reveal delay-2">
         <i class="fa-solid fa-seedling"></i>
-        <h3>Hydroponic Vegetables</h3>
-        <p>Clean, nutrient-rich produce nourished by recycled aquaponics water[cite: 1]:</p>
+        <h3>Greens-Vegetables</h3>
+        <p>Clean, nutrient-rich produce nourished by recycled aquaponics water:</p>
         <ul>
           <li>Fresh Premium Lettuce</li>
           <li>Pechay & Kangkong]</li>
@@ -726,11 +775,11 @@
       <div class="card reveal delay-3">
         <i class="fa-solid fa-chart-line"></i>
         <h3>Business Viability</h3>
-        <p>Empowered by funding grants and scalable revenue models:</p>
+        <p>Empowered by funding grants and scalable revenue models[cite: 1]:</p>
         <ul>
           <li>170% Projected ROI[cite: 1]</li>
           <li>1.5 - 2 Years Payback Period[cite: 1]</li>
-          <li>Dual Revenue: Greens and Fish Livestock Produce & IoT Device Production/Installation</li>
+          <li>Dual Revenue: Produce & IoT Hardware Installation[cite: 1]</li>
         </ul>
       </div>
     </div>
@@ -740,7 +789,7 @@
   <footer id="contact">
     <div class="footer-content">
       <div class="footer-section">
-        <h4>BUHI IntelliFarm</h4>
+        <h4>BUHÌ IntelliFarm</h4>
         <p>IoT-enabled Smart Farm Management System transforming idle agricultural infrastructure into intelligent food production facilities[cite: 1].</p>
       </div>
       <div class="footer-section">
@@ -752,17 +801,17 @@
       </div>
       <div class="footer-section">
         <h4>Contact & Channels</h4>
-        <p><i class="fa-solid fa-envelope"></i> buhi.intellifarm@gmail.com</p>
-        <p><i class="fa-solid fa-globe"></i> buhi.intellifarm.com</p>
-        <p><i class="fa-brands fa-facebook"></i> facebook.com/buhi.intellifarm</p>
+        <p><i class="fa-solid fa-envelope"></i> buhi.intellifarm@gmail.com[cite: 1]</p>
+        <p><i class="fa-solid fa-globe"></i> buhi.intellifarm.com[cite: 1]</p>
+        <p><i class="fa-brands fa-facebook"></i> facebook.com/buhi.intellifarm[cite: 1]</p>
       </div>
       <div class="footer-section">
         <h4>Location</h4>
-        <p><i class="fa-solid fa-location-dot"></i> Brgy. Bun-od, Cuartero, Capiz, Philippines</p>
+        <p><i class="fa-solid fa-location-dot"></i> Brgy. Bun-od, Cuartero, Capiz, Philippines[cite: 1]</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 BUHI IntelliFarm. All Rights Reserved.</p>
+      <p>&copy; 2026 BUHÌ IntelliFarm. All Rights Reserved.</p>
     </div>
   </footer>
 
