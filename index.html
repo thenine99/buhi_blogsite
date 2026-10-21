@@ -13,7 +13,7 @@
 
   <style>
     /* ==========================================================================
-       APPLE / SAMSUNG styleeeee LIGHT-MODE THEME & DESIGN SYSTEM
+       APPLE / SAMSUNG LIGHT-MODE THEME & DESIGN SYSTEM
        ========================================================================== */
     :root {
       --bg-main: #fafafa;
@@ -296,7 +296,7 @@
       transform: translateY(-2px);
     }
 
-    /* NEW: dark APK download button */
+    /* Dark APK download button */
     .btn-dark {
       background: var(--text-primary);
       color: #fff;
@@ -523,7 +523,7 @@
     }
 
     /* ==========================================================================
-       NEW: APK DOWNLOAD SECTION
+       APK DOWNLOAD SECTION
        ========================================================================== */
     #download { padding-top: 2rem; }
 
@@ -769,13 +769,13 @@
       <div class="btn-group reveal delay-3">
         <a href="#product" class="btn btn-primary"><i class="fa-solid fa-box-open"></i> Discover Hardware</a>
         <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-desktop"></i> Try Live App</a>
-        <!-- NEW: APK download button (link is set in the APK CONFIG at the bottom of this file) -->
+        <!-- APK download button (link is set in the APK CONFIG at the bottom of this file) -->
         <a href="#download" data-apk-link target="_blank" rel="noopener" class="btn btn-dark"><i class="fa-brands fa-android"></i> Download APK</a>
       </div>
     </div>
   </section>
 
-  <!-- HARDWARE SECTION (INSERT hardware-img.png HERE) -->
+  <!-- HARDWARE SECTION -->
   <section id="product">
     <div class="product-section reveal">
       <div class="product-container">
@@ -838,9 +838,7 @@
     </div>
   </section>
 
-  <!-- ======================================================================
-       NEW: DOWNLOAD APP (APK) SECTION
-       ====================================================================== -->
+  <!-- DOWNLOAD APP (APK) SECTION -->
   <section id="download">
     <div class="download-section reveal">
       <div class="download-container">
@@ -876,7 +874,7 @@
     </div>
   </section>
 
-  <!-- PARUGMON / STORY SECTION (INSERT parugmon-img.png HERE) -->
+  <!-- PARUGMON / STORY SECTION -->
   <section id="about">
     <div class="section-title reveal">
       <p>BACKGROUND & RATIONALE</p>
@@ -999,18 +997,30 @@
 
   <!-- ======================================================================
        APK CONFIG  —  EDIT THIS BLOCK WHENEVER YOU UPDATE THE APP
-       Paste your new link in `url` (Google Drive, Dropbox, GitHub Releases,
-       MediaFire, your own server... anything). Every Download APK button
+       Paste your Dropbox link in `url` below. Every Download APK button
        and link on the page updates automatically.
        ====================================================================== -->
   <script>
     const APK_CONFIG = {
-      // <-- PASTE YOUR APK LINK HERE
+      // <-- PASTE YOUR DROPBOX LINK HERE
       url:     'https://www.dropbox.com/scl/fi/qicirrzuukd33rf9b7cfk/Buhi.apk?rlkey=a49hckrbhkftylo72ayoyo114&st=xfe0wlhm&dl=1',
       version: '1.0.0',      // shown in the download section
       size:    '~25 MB',     // shown in the download section
       updated: 'Oct 2026'    // shown in the download section
     };
+
+    // Makes sure Dropbox links download directly (dl=0 -> dl=1).
+    // Any other link (Drive, GitHub, etc.) is used as pasted.
+    function resolveApkUrl(url) {
+      if (url.includes('dropbox.com')) {
+        if (/[?&]dl=\d/.test(url)) return url.replace(/([?&])dl=\d/, '$1dl=1');
+        return url + (url.includes('?') ? '&' : '?') + 'dl=1';
+      }
+      const m = url.match(/drive\.google\.com\/file\/d\/([^/?#]+)/) ||
+                url.match(/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([^&#]+)/);
+      return m ? 'https://drive.google.com/uc?export=download&id=' + m[1] : url;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const link = resolveApkUrl(APK_CONFIG.url);
       document.querySelectorAll('[data-apk-link]').forEach(a => a.setAttribute('href', link));
