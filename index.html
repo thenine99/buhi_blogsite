@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BUHI IntelliFarm - Next-Gen Smart Aquaponics</title>
-  
+
   <!-- Google Fonts & FontAwesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,7 +92,7 @@
       width: 100%;
       height: 100%;
       /* EDIT HEADER BACKGROUND IMAGE HERE */
-      background-image: url('bg.png'); 
+      background-image: url('bg.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -190,7 +190,7 @@
       width: 100%;
       height: 100%;
       /* EDIT HERO BACKGROUND PHOTO HERE */
-      background-image: url('hero-bg.jpg'); 
+      background-image: url('hero-bg.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -255,6 +255,7 @@
 
     .btn-group {
       display: flex;
+      flex-wrap: wrap;
       gap: 1.2rem;
       justify-content: center;
       align-items: center;
@@ -294,6 +295,21 @@
       background: var(--bg-subtle);
       transform: translateY(-2px);
     }
+
+    /* NEW: dark APK download button */
+    .btn-dark {
+      background: var(--text-primary);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+    }
+
+    .btn-dark:hover {
+      background: var(--brand-green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-dark i { color: #3ddc84; /* Android green */ }
 
     /* ==========================================================================
        GENERAL SECTIONS & CARDS
@@ -507,6 +523,127 @@
     }
 
     /* ==========================================================================
+       NEW: APK DOWNLOAD SECTION
+       ========================================================================== */
+    #download { padding-top: 2rem; }
+
+    .download-section {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 4rem 3rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .download-section::before {
+      content: "";
+      position: absolute;
+      top: -140px;
+      right: -140px;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: var(--brand-gradient);
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .download-container {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .download-info h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin: 0.4rem 0 1rem;
+    }
+
+    .download-info > p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .apk-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .apk-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.45rem 1rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .apk-meta i { color: var(--brand-green-dark); }
+
+    .install-steps {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+    }
+
+    .install-steps h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .install-steps ol {
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .install-steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 0.9rem;
+      font-size: 0.93rem;
+      color: var(--text-secondary);
+    }
+
+    .install-steps li:last-child { margin-bottom: 0; }
+
+    .install-steps li::before {
+      content: counter(step);
+      flex: 0 0 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--brand-gradient);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .download-note {
+      margin-top: 1.2rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
        SPLIT CONTENT SECTION (PARUGMON / STORY)
        ========================================================================== */
     .split-container {
@@ -577,13 +714,14 @@
        ========================================================================== */
     @media (max-width: 992px) {
       .hero h1 { font-size: 2.8rem; }
-      .product-container, .app-container, .split-container { grid-template-columns: 1fr; }
+      .product-container, .app-container, .split-container, .download-container { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hero h1 { font-size: 2.2rem; }
       .hero { padding-top: 7rem; }
+      .download-section { padding: 2.5rem 1.5rem; }
     }
   </style>
 </head>
@@ -591,7 +729,6 @@
 
   <!-- NAVIGATION BAR WITH DYNAMIC bg.png BACKGROUND -->
   <header>
-    <!-- Background overlay at 25% transparency -->
     <div class="header-bg"></div>
 
     <nav>
@@ -603,6 +740,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#product">Hardware Device</a></li>
         <li><a href="#app">Cloud Dashboard</a></li>
+        <li><a href="#download">Download App</a></li>
         <li><a href="#mission">Vision & Mission</a></li>
         <li><a href="#commodities">Produce</a></li>
         <li><a href="https://buhi-test.vercel.app/" target="_blank" class="nav-cta">Launch App <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></a></li>
@@ -619,18 +757,20 @@
       <div class="hero-badge reveal">
         <i class="fa-solid fa-microchip"></i> Next-Gen IoT Smart Farm Systems
       </div>
-      
+
       <h1 class="reveal delay-1">
         Reinventing Agriculture with <span>Intelligent Farming</span>
       </h1>
-      
+
       <p class="reveal delay-2">
-        <strong>OUR STORY</strong> – BUHI IntelliFarm idea started when ASF affected our community that led to a considereable number of abandoned pigpens. Having a background of Agricultual and Biosystems Engineering and Computer Science, our team as children of backyard farmers wanted to transform these underutilized and ASF-affected pig pens into biosecure, high-yield aquaponics facilities powered by continuous IoT water telemetry and real-time monitoring devices and automated system.
+        <strong>OUR STORY</strong> – BUHI IntelliFarm idea started when ASF affected our community that led to a considerable number of abandoned pigpens. Having a background of Agricultural and Biosystems Engineering and Computer Science, our team as children of backyard farmers wanted to transform these underutilized and ASF-affected pig pens into biosecure, high-yield aquaponics facilities powered by continuous IoT water telemetry and real-time monitoring devices and automated system.
       </p>
-      
+
       <div class="btn-group reveal delay-3">
         <a href="#product" class="btn btn-primary"><i class="fa-solid fa-box-open"></i> Discover Hardware</a>
         <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-desktop"></i> Try Live App</a>
+        <!-- NEW: APK download button (file name is set in the APK CONFIG at the bottom of this file) -->
+        <a href="buhi.apk" download="buhi.apk" data-apk-link class="btn btn-dark"><i class="fa-brands fa-android"></i> Download APK</a>
       </div>
     </div>
   </section>
@@ -640,7 +780,6 @@
     <div class="product-section reveal">
       <div class="product-container">
         <div class="product-image-wrapper">
-          <!-- INSERT YOUR HARDWARE IMAGE BELOW (hardware-img.png) -->
           <img src="aquasense.jpeg" alt="BUHI AquaSense IoT Hardware Device" onerror="this.src='https://via.placeholder.com/500x500?text=INSERT+hardware-img.png+HERE'">
         </div>
         <div class="product-details">
@@ -683,12 +822,55 @@
           <span style="color: var(--brand-green); font-weight: 800; font-size: 0.85rem; letter-spacing: 1px;">WEB & MOBILE DASHBOARD</span>
           <h3 style="margin-top: 0.5rem;">Manage Your Farm from Anywhere</h3>
           <p>Gain total control over water quality parameters, automated pump cycles, and environmental metrics in real-time through our intuitive cloud application.</p>
-          <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-primary">
-            Access Dashboard <i class="fa-solid fa-arrow-right"></i>
-          </a>
+          <div class="btn-group" style="justify-content: flex-start;">
+            <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-primary">
+              Access Dashboard <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="#download" class="btn btn-secondary">
+              <i class="fa-brands fa-android" style="color:#3ddc84;"></i> Get the Android App
+            </a>
+          </div>
         </div>
         <div class="app-preview-card">
           <img src="dashboard.jpg" alt="BUHI Web Dashboard Interface" onerror="this.src='https://via.placeholder.com/600x380/0f172a/ffffff?text=BUHI+Web+App+Interface'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       NEW: DOWNLOAD APP (APK) SECTION
+       ====================================================================== -->
+  <section id="download">
+    <div class="download-section reveal">
+      <div class="download-container">
+        <div class="download-info">
+          <span class="badge-pill"><i class="fa-brands fa-android"></i> ANDROID APP</span>
+          <h2>Download the BUHÌ IntelliFarm App</h2>
+          <p>Install the Android app to monitor water quality, control pumps and receive farm alerts right from your phone — even in the field.</p>
+
+          <!-- These values are filled in from the APK CONFIG at the bottom of the file -->
+          <div class="apk-meta">
+            <span><i class="fa-solid fa-code-branch"></i> Version <b data-apk-version>1.0.0</b></span>
+            <span><i class="fa-solid fa-hard-drive"></i> <b data-apk-size>~25 MB</b></span>
+            <span><i class="fa-solid fa-calendar-check"></i> Updated <b data-apk-updated>2026</b></span>
+            <span><i class="fa-brands fa-android"></i> Android 8.0+</span>
+          </div>
+
+          <a href="buhi.apk" download="buhi.apk" data-apk-link class="btn btn-primary">
+            <i class="fa-solid fa-download"></i> Download <span data-apk-name>buhi.apk</span>
+          </a>
+          <p class="download-note"><i class="fa-solid fa-shield-halved"></i> Direct download from the official BUHÌ IntelliFarm website.</p>
+        </div>
+
+        <div class="install-steps">
+          <h4><i class="fa-solid fa-list-check" style="color: var(--brand-blue); margin-right: 6px;"></i> How to install</h4>
+          <ol>
+            <li>Tap <strong>&nbsp;Download&nbsp;</strong> and wait for the file to finish.</li>
+            <li>Open the downloaded <strong>&nbsp;buhi.apk&nbsp;</strong> from your notifications or Files app.</li>
+            <li>If asked, allow <strong>&nbsp;Install unknown apps&nbsp;</strong> for your browser or file manager.</li>
+            <li>Tap <strong>&nbsp;Install&nbsp;</strong>, then open BUHÌ IntelliFarm and log in.</li>
+          </ol>
         </div>
       </div>
     </div>
@@ -703,14 +885,13 @@
     <div class="split-container">
       <div class="split-text reveal delay-1">
         <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-          African Swine Fever (ASF) left vast agricultural structures unused across rural communities . <strong>BUHÌ IntelliFarm</strong> addresses this crisis by transforming abandoned pig pens into clean, biosecure, intelligent aquaponics installations.
+          African Swine Fever (ASF) left vast agricultural structures unused across rural communities. <strong>BUHÌ IntelliFarm</strong> addresses this crisis by transforming abandoned pig pens into clean, biosecure, intelligent aquaponics installations.
         </p>
         <p style="font-size: 1rem; color: var(--text-secondary);">
           Initiated at <strong>Brgy. Bun-od, Cuartero, Capiz</strong>, our project minimizes labor, optimizes resource consumption, and promotes climate-resilient local food production through automated telemetry.
         </p>
       </div>
       <div class="split-image reveal delay-2">
-        <!-- INSERT YOUR PARUGMON SECTION IMAGE BELOW (parugmon-img.png) -->
         <img src="parugmon.jpg" alt="Parugmon Pig Pen Rehabilitation" onerror="this.src='https://via.placeholder.com/600x400/f1f5f9/475569?text=INSERT+parugmon-img.png+HERE'">
       </div>
     </div>
@@ -731,12 +912,12 @@
       <div class="card reveal delay-2">
         <i class="fa-solid fa-bullseye"></i>
         <h3>Our Mission</h3>
-        <p>To equip smallholder farmers with accessible, scalable IIoT technology that improves productivity, reduces manual intervention, and protects local ecosystems .</p>
+        <p>To equip smallholder farmers with accessible, scalable IIoT technology that improves productivity, reduces manual intervention, and protects local ecosystems.</p>
       </div>
       <div class="card reveal delay-3">
         <i class="fa-solid fa-shield-halved"></i>
         <h3>Value Proposition</h3>
-        <p>Continuous automated water monitoring, dynamic filtration, and automated refilling ensure pristine conditions for aquatic life and premium crops .</p>
+        <p>Continuous automated water monitoring, dynamic filtration, and automated refilling ensure pristine conditions for aquatic life and premium crops.</p>
       </div>
     </div>
   </section>
@@ -767,8 +948,8 @@
         <p>Clean, nutrient-rich produce nourished by recycled aquaponics water:</p>
         <ul>
           <li>Fresh Premium Lettuce</li>
-          <li>Pechay & Kangkong]</li>
-          <li>Culinary & Culinary Herbs</li>
+          <li>Pechay & Kangkong</li>
+          <li>Culinary Herbs</li>
           <li>Microgreens</li>
         </ul>
       </div>
@@ -777,8 +958,8 @@
         <h3>Business Viability</h3>
         <p>Empowered by funding grants and scalable revenue models:</p>
         <ul>
-          <li>170% Projected ROI </li>
-          <li>1.5 - 2 Years Payback Period </li>
+          <li>170% Projected ROI</li>
+          <li>1.5 - 2 Years Payback Period</li>
           <li>Dual Revenue: Produce & IoT Hardware Installation</li>
         </ul>
       </div>
@@ -797,6 +978,7 @@
         <a href="#about">About Project</a>
         <a href="#product">AquaSense IoT Unit</a>
         <a href="https://buhi-test.vercel.app/" target="_blank">Web Dashboard</a>
+        <a href="buhi.apk" download="buhi.apk" data-apk-link>Download Android App (APK)</a>
         <a href="#mission">Vision & Mission</a>
       </div>
       <div class="footer-section">
@@ -815,25 +997,43 @@
     </div>
   </footer>
 
+  <!-- ======================================================================
+       APK CONFIG  —  EDIT THIS BLOCK WHENEVER YOU UPDATE THE APP
+       1. Upload your new APK in the same folder as index.html
+       2. Change the values below (file name, version, size, date)
+       Every download button/link on the page updates automatically.
+       ====================================================================== -->
+  <script>
+    const APK_CONFIG = {
+      file:    'buhi.apk',   // <-- file name of the APK (must be in the same folder)
+      version: '1.0.0',      // <-- shown in the download section
+      size:    '~25 MB',     // <-- shown in the download section
+      updated: 'Oct 2026'    // <-- shown in the download section
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-apk-link]').forEach(a => {
+        a.setAttribute('href', APK_CONFIG.file);
+        a.setAttribute('download', APK_CONFIG.file);
+      });
+      const set = (sel, val) => document.querySelectorAll(sel).forEach(el => el.textContent = val);
+      set('[data-apk-name]', APK_CONFIG.file);
+      set('[data-apk-version]', APK_CONFIG.version);
+      set('[data-apk-size]', APK_CONFIG.size);
+      set('[data-apk-updated]', APK_CONFIG.updated);
+    });
+  </script>
+
   <!-- SCROLL REVEAL SCRIPT -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('active');
         });
-      }, observerOptions);
+      }, { root: null, rootMargin: '0px', threshold: 0.15 });
 
-      const revealElements = document.querySelectorAll('.reveal');
-      revealElements.forEach(el => observer.observe(el));
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     });
   </script>
 </body>
