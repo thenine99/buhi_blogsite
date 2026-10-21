@@ -13,7 +13,7 @@
 
   <style>
     /* ==========================================================================
-       APPLE / SAMSUNG LIGHT-MODE THEME & DESIGN SYSTEM
+       APPLE / SAMSUNG styleeeee LIGHT-MODE THEME & DESIGN SYSTEM
        ========================================================================== */
     :root {
       --bg-main: #fafafa;
@@ -769,8 +769,8 @@
       <div class="btn-group reveal delay-3">
         <a href="#product" class="btn btn-primary"><i class="fa-solid fa-box-open"></i> Discover Hardware</a>
         <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-desktop"></i> Try Live App</a>
-        <!-- NEW: APK download button (file name is set in the APK CONFIG at the bottom of this file) -->
-        <a href="buhi.apk" download="buhi.apk" data-apk-link class="btn btn-dark"><i class="fa-brands fa-android"></i> Download APK</a>
+        <!-- NEW: APK download button (link is set in the APK CONFIG at the bottom of this file) -->
+        <a href="#download" data-apk-link target="_blank" rel="noopener" class="btn btn-dark"><i class="fa-brands fa-android"></i> Download APK</a>
       </div>
     </div>
   </section>
@@ -857,8 +857,8 @@
             <span><i class="fa-brands fa-android"></i> Android 8.0+</span>
           </div>
 
-          <a href="buhi.apk" download="buhi.apk" data-apk-link class="btn btn-primary">
-            <i class="fa-solid fa-download"></i> Download <span data-apk-name>buhi.apk</span>
+          <a href="#download" data-apk-link target="_blank" rel="noopener" class="btn btn-primary">
+            <i class="fa-solid fa-download"></i> Download APK
           </a>
           <p class="download-note"><i class="fa-solid fa-shield-halved"></i> Direct download from the official BUHÌ IntelliFarm website.</p>
         </div>
@@ -867,7 +867,7 @@
           <h4><i class="fa-solid fa-list-check" style="color: var(--brand-blue); margin-right: 6px;"></i> How to install</h4>
           <ol>
             <li>Tap <strong>&nbsp;Download&nbsp;</strong> and wait for the file to finish.</li>
-            <li>Open the downloaded <strong>&nbsp;buhi.apk&nbsp;</strong> from your notifications or Files app.</li>
+            <li>Open the downloaded <strong>&nbsp;APK file&nbsp;</strong> from your notifications or Files app.</li>
             <li>If asked, allow <strong>&nbsp;Install unknown apps&nbsp;</strong> for your browser or file manager.</li>
             <li>Tap <strong>&nbsp;Install&nbsp;</strong>, then open BUHÌ IntelliFarm and log in.</li>
           </ol>
@@ -978,7 +978,7 @@
         <a href="#about">About Project</a>
         <a href="#product">AquaSense IoT Unit</a>
         <a href="https://buhi-test.vercel.app/" target="_blank">Web Dashboard</a>
-        <a href="buhi.apk" download="buhi.apk" data-apk-link>Download Android App (APK)</a>
+        <a href="#download" data-apk-link target="_blank" rel="noopener">Download Android App (APK)</a>
         <a href="#mission">Vision & Mission</a>
       </div>
       <div class="footer-section">
@@ -999,25 +999,22 @@
 
   <!-- ======================================================================
        APK CONFIG  —  EDIT THIS BLOCK WHENEVER YOU UPDATE THE APP
-       1. Upload your new APK in the same folder as index.html
-       2. Change the values below (file name, version, size, date)
-       Every download button/link on the page updates automatically.
+       Paste your new link in `url` (Google Drive, Dropbox, GitHub Releases,
+       MediaFire, your own server... anything). Every Download APK button
+       and link on the page updates automatically.
        ====================================================================== -->
   <script>
     const APK_CONFIG = {
-      file:    'buhi.apk',   // <-- file name of the APK (must be in the same folder)
-      version: '1.0.0',      // <-- shown in the download section
-      size:    '~25 MB',     // <-- shown in the download section
-      updated: 'Oct 2026'    // <-- shown in the download section
+      // <-- PASTE YOUR APK LINK HERE
+      url:     'https://www.dropbox.com/scl/fi/qicirrzuukd33rf9b7cfk/Buhi.apk?rlkey=a49hckrbhkftylo72ayoyo114&st=xfe0wlhm&dl=1',
+      version: '1.0.0',      // shown in the download section
+      size:    '~25 MB',     // shown in the download section
+      updated: 'Oct 2026'    // shown in the download section
     };
-
     document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[data-apk-link]').forEach(a => {
-        a.setAttribute('href', APK_CONFIG.file);
-        a.setAttribute('download', APK_CONFIG.file);
-      });
+      const link = resolveApkUrl(APK_CONFIG.url);
+      document.querySelectorAll('[data-apk-link]').forEach(a => a.setAttribute('href', link));
       const set = (sel, val) => document.querySelectorAll(sel).forEach(el => el.textContent = val);
-      set('[data-apk-name]', APK_CONFIG.file);
       set('[data-apk-version]', APK_CONFIG.version);
       set('[data-apk-size]', APK_CONFIG.size);
       set('[data-apk-updated]', APK_CONFIG.updated);
