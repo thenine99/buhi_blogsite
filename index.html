@@ -1,241 +1,2566 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Maintenance</title>
-    <style>
-        /* CSS Variables for clean theming and easy customization (Defaults to sleek dark mode, adapts to light mode if preferred) */
-        :root {
-            --bg-gradient-start: #0f172a;
-            --bg-gradient-end: #020617;
-            --card-bg: rgba(30, 41, 59, 0.75);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.25);
-            --badge-bg: rgba(56, 189, 248, 0.1);
-            --badge-border: rgba(56, 189, 248, 0.3);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUHÌ IntelliFarm Systems | Agri-Bots: One System. One App. One Smarter Farm.</title>
+  <meta name="description" content="BUHÌ IntelliFarm Systems builds Agri-Bots: locally developed IoT farm gadgets, one monitoring app, and Sprout, the desktop pet-bot that tells you how your farm is doing. From Brgy. Bun-od, Cuartero, Capiz.">
+  <meta name="theme-color" content="#059669">
+  <link rel="icon" href="logo.png">
 
-        /* Light mode adaptation for users with light system preferences */
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg-gradient-start: #f1f5f9;
-                --bg-gradient-end: #e2e8f0;
-                --card-bg: rgba(255, 255, 255, 0.9);
-                --card-border: rgba(15, 23, 42, 0.08);
-                --text-primary: #0f172a;
-                --text-secondary: #475569;
-                --accent-color: #0284c7;
-                --accent-glow: rgba(2, 132, 199, 0.15);
-                --badge-bg: rgba(2, 132, 199, 0.08);
-                --badge-border: rgba(2, 132, 199, 0.25);
-            }
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        /* Reset & Base Typography */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --bg-main: #f7f9f8;
+      --bg-surface: #ffffff;
+      --bg-subtle: #eef3f1;
+      --bg-dark: #0b1a17;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --brand-green: #10b981;
+      --brand-green-dark: #059669;
+      --brand-blue: #0284c7;
+      --brand-lime: #a3e635;
+      --brand-gradient: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
+      --border-light: rgba(15, 23, 42, 0.08);
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 14px 36px rgba(15, 23, 42, 0.07);
+      --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.12);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition: all 0.45s var(--ease);
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-            background: radial-gradient(circle at top center, var(--bg-gradient-start), var(--bg-gradient-end));
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 
-        /* Main Card Container */
-        .maintenance-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 1.5rem;
-            padding: 3.5rem 2.5rem;
-            max-width: 560px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
-            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.is-loading { overflow: hidden; }
 
-        /* Animated Gear Icon Wrapper */
-        .icon-wrapper {
-            position: relative;
-            width: 88px;
-            height: 88px;
-            margin: 0 auto 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--badge-bg);
-            border: 1px solid var(--badge-border);
-            border-radius: 50%;
-            box-shadow: 0 0 30px var(--accent-glow);
-        }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
 
-        /* Primary & Secondary Gear SVG Styling */
-        .gear-primary {
-            width: 44px;
-            height: 44px;
-            color: var(--accent-color);
-            animation: spinClockwise 12s linear infinite;
-            transform-origin: center;
-        }
+    .gradient-text {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        .gear-secondary {
-            position: absolute;
-            bottom: 14px;
-            right: 14px;
-            width: 24px;
-            height: 24px;
-            color: var(--accent-color);
-            opacity: 0.8;
-            animation: spinCounterClockwise 8s linear infinite;
-            transform-origin: center;
-        }
+    /* ==========================================================================
+       1-SECOND LOADING SCREEN
+       ========================================================================== */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 50% 40%, #ffffff 0%, #ecfdf5 55%, #e0f2fe 100%);
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+    }
+    #loader.done { opacity: 0; visibility: hidden; }
 
-        /* Status Pill */
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.375rem 0.875rem;
-            background: var(--badge-bg);
-            border: 1px solid var(--badge-border);
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--accent-color);
-            margin-bottom: 1.25rem;
-        }
+    .loader-inner { text-align: center; }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
+    .loader-mark {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 1.4rem;
+    }
+    .loader-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 3px solid rgba(16, 185, 129, 0.15);
+      border-top-color: var(--brand-green);
+      border-right-color: var(--brand-blue);
+      animation: spin 0.9s linear infinite;
+    }
+    .loader-sprout {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+    .loader-sprout svg { width: 58px; height: 58px; overflow: visible; }
+    .loader-sprout .stem {
+      stroke-dasharray: 40;
+      stroke-dashoffset: 40;
+      animation: draw 0.45s 0.05s var(--ease) forwards;
+    }
+    .loader-sprout .leaf {
+      transform-box: fill-box;
+      transform: scale(0);
+      animation: pop 0.4s var(--ease) forwards;
+    }
+    .loader-sprout .leaf.l { transform-origin: right bottom; animation-delay: 0.35s; }
+    .loader-sprout .leaf.r { transform-origin: left bottom; animation-delay: 0.5s; }
+    .loader-sprout .drop {
+      opacity: 0;
+      animation: drip 0.5s 0.55s ease-out forwards;
+    }
 
-        /* Main Heading */
-        h1 {
-            font-size: clamp(1.75rem, 4.5vw, 2.5rem);
-            font-weight: 800;
-            letter-spacing: 0.04em;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
+    .loader-word {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: inline-flex;
+      gap: 1px;
+    }
+    .loader-word span {
+      opacity: 0;
+      transform: translateY(12px);
+      display: inline-block;
+      animation: rise 0.45s var(--ease) forwards;
+    }
+    .loader-word span:nth-child(1) { animation-delay: 0.10s; }
+    .loader-word span:nth-child(2) { animation-delay: 0.18s; }
+    .loader-word span:nth-child(3) { animation-delay: 0.26s; }
+    .loader-word span:nth-child(4) { animation-delay: 0.34s; }
+    .loader-word .sub {
+      margin-left: 8px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      animation-delay: 0.42s !important;
+    }
 
-        /* Highlighted Return Date Subheading */
-        .return-message {
-            font-size: clamp(1.125rem, 2.5vw, 1.35rem);
-            font-weight: 600;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
+    .loader-bar {
+      width: 180px;
+      height: 4px;
+      margin: 1.2rem auto 0.7rem;
+      border-radius: 4px;
+      background: rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+    .loader-bar i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--brand-gradient);
+      border-radius: 4px;
+      animation: fill 1s var(--ease) forwards;
+    }
+    .loader-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
 
-        /* Supporting Description */
-        .description {
-            font-size: 0.975rem;
-            color: var(--text-secondary);
-            max-width: 420px;
-            margin: 0 auto;
-        }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes pop { to { transform: scale(1); } }
+    @keyframes drip { 0% { opacity: 0; transform: translateY(-6px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fill { to { width: 100%; } }
 
-        /* Keyframe Animations */
-        @keyframes spinClockwise {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+    /* ==========================================================================
+       SCROLL REVEAL
+       ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease-out, transform 0.9s var(--ease);
+    }
+    .reveal.active { opacity: 1; transform: none; }
+    .no-js .reveal { opacity: 1; transform: none; }
+    .delay-1 { transition-delay: 0.08s; }
+    .delay-2 { transition-delay: 0.16s; }
+    .delay-3 { transition-delay: 0.24s; }
+    .delay-4 { transition-delay: 0.32s; }
 
-        @keyframes spinCounterClockwise {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
+    /* ==========================================================================
+       HEADER / NAV
+       ========================================================================== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.78);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    header.scrolled {
+      border-bottom-color: var(--border-light);
+      box-shadow: 0 6px 24px rgba(15, 23, 42, 0.05);
+    }
 
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.4;
-                transform: scale(0.85);
-            }
-        }
+    .header-bg {
+      position: absolute;
+      inset: 0;
+      /* EDIT HEADER BACKGROUND IMAGE HERE */
+      background-image: url('bg.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.25;
+      z-index: -1;
+      pointer-events: none;
+    }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    nav {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 1.5rem;
+    }
 
-        /* Mobile Adjustments */
-        @media (max-width: 480px) {
-            .maintenance-card {
-                padding: 2.5rem 1.5rem;
-                border-radius: 1.25rem;
-            }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+    }
+    .logo img {
+      height: 40px;
+      width: 40px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .logo-fallback {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--brand-gradient);
+      color: #fff;
+      font-weight: 800;
+      place-items: center;
+    }
+    .logo-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    .logo-text small {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
 
-            .icon-wrapper {
-                width: 76px;
-                height: 76px;
-                margin-bottom: 1.5rem;
-            }
-        }
-    </style>
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.6rem;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: color 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--brand-green-dark); }
+
+    .nav-cta {
+      background: var(--text-primary);
+      color: #fff !important;
+      padding: 0.55rem 1.2rem;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.3s ease, box-shadow 0.3s ease !important;
+    }
+    .nav-cta:hover {
+      background: var(--brand-green-dark);
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      background: var(--bg-surface);
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       BUTTONS
+       ========================================================================== */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn {
+      padding: 0.95rem 1.9rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.98rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--brand-gradient);
+      color: #fff;
+      box-shadow: 0 10px 26px rgba(16, 185, 129, 0.28);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(16, 185, 129, 0.38); }
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border-color: var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover { background: var(--bg-subtle); transform: translateY(-2px); }
+    .btn-dark {
+      background: var(--text-primary);
+      color: #fff;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.2);
+    }
+    .btn-dark:hover { background: var(--brand-green-dark); transform: translateY(-2px); }
+    .btn-dark i, .android { color: #3ddc84; }
+    .btn-dark:hover i { color: #fff; }
+    .btn-ghost-light {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    .btn-ghost-light:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-2px); }
+
+    /* ==========================================================================
+       HERO
+       ========================================================================== */
+    .hero {
+      position: relative;
+      padding: 9.5rem 1.5rem 5rem;
+      text-align: center;
+      overflow: hidden;
+      isolation: isolate;
+      max-width: none;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      /* EDIT HERO BACKGROUND PHOTO HERE */
+      background-image: url('hero-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+      z-index: -3;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(60% 50% at 15% 20%, rgba(16, 185, 129, 0.14) 0%, transparent 70%),
+        radial-gradient(50% 45% at 85% 30%, rgba(2, 132, 199, 0.12) 0%, transparent 70%),
+        radial-gradient(circle at center, rgba(247, 249, 248, 0.6) 0%, rgba(247, 249, 248, 0.96) 100%);
+      z-index: -2;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(circle at 50% 35%, #000 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 50% 35%, #000 0%, transparent 70%);
+      z-index: -1;
+    }
+
+    .hero-content { max-width: 1060px; margin: 0 auto; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0.45rem 1.1rem 0.45rem 0.5rem;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      color: var(--brand-green-dark);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.8rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-badge b {
+      background: var(--brand-gradient);
+      color: #fff;
+      padding: 0.2rem 0.65rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 6vw, 4.4rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-lead {
+      font-size: clamp(1.02rem, 2vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin: 0 auto 2.4rem;
+    }
+    .hero-lead strong { color: var(--text-primary); }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      max-width: 920px;
+      margin: 4rem auto 0;
+      background: var(--border-light);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .hero-stat {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 1.4rem 1rem;
+    }
+    .hero-stat strong {
+      display: block;
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+    .hero-stat span {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       GENERAL SECTIONS
+       ========================================================================== */
+    section {
+      padding: 6rem 1.5rem;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 3.5rem;
+    }
+    .eyebrow {
+      display: inline-block;
+      color: var(--brand-blue);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+    .section-title h2, .h2 {
+      font-size: clamp(1.9rem, 4vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      line-height: 1.12;
+    }
+    .section-title p.lede {
+      margin-top: 1rem;
+      color: var(--text-secondary);
+      font-size: 1.07rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.6rem;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .icon-tile {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      color: #fff;
+      background: var(--brand-gradient);
+      box-shadow: 0 10px 22px rgba(16, 185, 129, 0.25);
+      margin-bottom: 1.3rem;
+    }
+    .card h3 {
+      font-size: 1.28rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.6rem;
+    }
+    .card p { color: var(--text-secondary); font-size: 0.97rem; }
+
+    .check-list { list-style: none; margin-top: 1rem; }
+    .check-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 0.55rem;
+    }
+    .check-list li::before {
+      content: "\f00c";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 0.7rem;
+      flex: 0 0 20px;
+      height: 20px;
+      margin-top: 3px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--brand-green-dark);
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0.35rem 0.9rem;
+      background: rgba(2, 132, 199, 0.09);
+      color: var(--brand-blue);
+      border-radius: 50px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .badge-pill.green { background: rgba(16, 185, 129, 0.1); color: var(--brand-green-dark); }
+    .badge-pill.amber { background: rgba(234, 179, 8, 0.13); color: #a16207; }
+
+    /* ==========================================================================
+       MEANING OF BUHI
+       ========================================================================== */
+    .meaning {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .meaning-word {
+      position: relative;
+      background: var(--bg-dark);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .meaning-word::after {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      right: -110px;
+      bottom: -120px;
+      border-radius: 50%;
+      background: var(--brand-gradient);
+      opacity: 0.35;
+      filter: blur(10px);
+    }
+    .meaning-word .word {
+      font-size: clamp(3.4rem, 8vw, 5.6rem);
+      font-weight: 800;
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+    .meaning-word .pron {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      font-style: italic;
+      margin: 0.6rem 0 1.6rem;
+    }
+    .meaning-word ol {
+      list-style: none;
+      counter-reset: def;
+      position: relative;
+      z-index: 1;
+    }
+    .meaning-word li {
+      counter-increment: def;
+      display: flex;
+      gap: 12px;
+      color: #cbd5e1;
+      margin-bottom: 0.8rem;
+    }
+    .meaning-word li::before {
+      content: counter(def) ".";
+      color: var(--brand-lime);
+      font-weight: 800;
+    }
+    .meaning-text p {
+      color: var(--text-secondary);
+      font-size: 1.06rem;
+      margin-top: 1.1rem;
+    }
+    .meaning-text p strong { color: var(--text-primary); }
+
+    /* ==========================================================================
+       JOURNEY TIMELINE
+       ========================================================================== */
+    .timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 27px;
+      left: 8%;
+      right: 8%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--brand-green), var(--brand-blue), #8b5cf6);
+      opacity: 0.35;
+    }
+    .tl-step { position: relative; text-align: left; }
+    .tl-dot {
+      position: relative;
+      z-index: 1;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--bg-surface);
+      border: 2px solid var(--brand-green);
+      color: var(--brand-green-dark);
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 0 0 6px var(--bg-main);
+    }
+    .tl-step:nth-child(2) .tl-dot { border-color: var(--brand-blue); color: var(--brand-blue); }
+    .tl-step:nth-child(3) .tl-dot { border-color: #8b5cf6; color: #7c3aed; }
+    .tl-level {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .tl-step h3 { margin: 0.2rem 0 0.6rem; }
+    .tl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+    .tl-tags span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       ECOSYSTEM (FARM OS)
+       ========================================================================== */
+    .ecosystem {
+      position: relative;
+      background: linear-gradient(160deg, #0b1a17 0%, #0f2a3a 100%);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 4rem 3rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .ecosystem::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+    }
+    .ecosystem .section-title h2 { color: #fff; }
+    .ecosystem .section-title .lede { color: #94a3b8; }
+    .ecosystem .eyebrow { color: var(--brand-lime); }
+
+    .os-flow {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 1.2rem;
+      align-items: center;
+    }
+    .os-col {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1.6rem;
+      backdrop-filter: blur(8px);
+    }
+    .os-col h4 {
+      font-size: 0.78rem;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 1rem;
+    }
+    .os-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.7rem 0.8rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      margin-bottom: 0.55rem;
+      font-weight: 600;
+      font-size: 0.93rem;
+    }
+    .os-item:last-child { margin-bottom: 0; }
+    .os-item i {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.18);
+      color: #6ee7b7;
+    }
+    .os-item small { display: block; font-weight: 500; color: #94a3b8; font-size: 0.78rem; }
+    .os-core {
+      text-align: center;
+      padding: 2.2rem 1.4rem;
+      border-color: rgba(16, 185, 129, 0.45);
+      background: rgba(16, 185, 129, 0.08);
+      box-shadow: 0 0 60px rgba(16, 185, 129, 0.18);
+    }
+    .os-core .core-icon {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 1rem;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      font-size: 1.9rem;
+      background: var(--brand-gradient);
+      animation: pulse 2.6s ease-in-out infinite;
+    }
+    .os-core h3 { font-size: 1.35rem; margin-bottom: 0.4rem; }
+    .os-core p { color: #94a3b8; font-size: 0.92rem; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+      50% { box-shadow: 0 0 0 16px rgba(16, 185, 129, 0); }
+    }
+    .os-link {
+      width: 54px;
+      height: 2px;
+      background-image: linear-gradient(90deg, #6ee7b7 50%, transparent 50%);
+      background-size: 12px 2px;
+      animation: flow 0.8s linear infinite;
+    }
+    @keyframes flow { to { background-position: 12px 0; } }
+    .os-tagline {
+      position: relative;
+      text-align: center;
+      margin-top: 2.6rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+    .os-tagline span { color: var(--brand-lime); }
+
+    /* ==========================================================================
+       PRODUCTS
+       ========================================================================== */
+    .product-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 2.2rem;
+    }
+    .product-tab {
+      border: 1px solid var(--border-light);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 0.7rem 1.25rem;
+      border-radius: 50px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+    .product-tab:hover { color: var(--text-primary); border-color: rgba(16, 185, 129, 0.35); }
+    .product-tab[aria-selected="true"] {
+      background: var(--text-primary);
+      color: #fff;
+      border-color: var(--text-primary);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+    }
+
+    .product-panel {
+      display: none;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-md);
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .product-panel.active { display: grid; animation: panelIn 0.6s var(--ease); }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+    .product-visual {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 50% 40%, #ffffff 0%, #e8f0ee 100%);
+      border: 1px solid var(--border-light);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .product-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease);
+    }
+    .product-visual:hover img { transform: scale(1.04); }
+    .product-visual .ph {
+      display: none;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .product-visual.no-img .ph { display: block; }
+    .product-visual.no-img img { display: none; }
+    .ph-icon {
+      width: 132px;
+      height: 132px;
+      margin: 0 auto 1rem;
+      border-radius: 36px;
+      display: grid;
+      place-items: center;
+      font-size: 3.4rem;
+      color: #fff;
+      background: var(--brand-gradient);
+      box-shadow: 0 24px 50px rgba(2, 132, 199, 0.25);
+    }
+    .ph small { font-weight: 600; font-size: 0.82rem; }
+    .stage-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border-light);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.35rem 0.8rem;
+      border-radius: 50px;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .product-info h3 {
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+    }
+    .product-info .sub {
+      color: var(--brand-green-dark);
+      font-weight: 700;
+      margin: 0.3rem 0 1rem;
+    }
+    .product-info > p { color: var(--text-secondary); font-size: 1.02rem; }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1.6rem;
+    }
+    .spec {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 0.95rem;
+      border-radius: 14px;
+      background: var(--bg-subtle);
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .spec i { color: var(--brand-blue); margin-top: 3px; }
+    .spec small { display: block; color: var(--text-muted); font-weight: 500; font-size: 0.8rem; }
+
+    .indicator-list { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1.4rem; }
+    .status-dot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+    }
+    .dot { width: 9px; height: 9px; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+    .dot.green { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+    .dot.blue { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; animation-delay: 0.4s; }
+    .dot.yellow { background: #eab308; box-shadow: 0 0 8px #eab308; animation-delay: 0.8s; }
+    @keyframes blink { 50% { opacity: 0.35; } }
+
+    /* ==========================================================================
+       SPROUT PET-BOT
+       ========================================================================== */
+    .sprout-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .sprout-stage {
+      position: relative;
+      background: linear-gradient(160deg, #ecfdf5 0%, #e0f2fe 100%);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem 2.2rem;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    .bot {
+      position: relative;
+      width: 230px;
+      margin: 0 auto;
+      animation: bob 3.2s ease-in-out infinite;
+    }
+    @keyframes bob { 50% { transform: translateY(-8px); } }
+    .bot-leaf {
+      position: relative;
+      height: 44px;
+    }
+    .bot-leaf::before, .bot-leaf::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 34px;
+      height: 22px;
+      background: #22c55e;
+      border-radius: 0 100% 0 100%;
+    }
+    .bot-leaf::before { left: calc(50% - 34px); transform: rotate(-10deg); transform-origin: right bottom; border-radius: 100% 0 100% 0; background: #16a34a; }
+    .bot-leaf::after { left: 50%; transform: rotate(10deg); transform-origin: left bottom; }
+    .bot-leaf i {
+      position: absolute;
+      left: calc(50% - 2px);
+      bottom: -6px;
+      width: 4px;
+      height: 22px;
+      background: #15803d;
+      border-radius: 2px;
+    }
+    .bot-head {
+      position: relative;
+      background: #ffffff;
+      border-radius: 46px;
+      padding: 16px;
+      box-shadow: 0 24px 40px rgba(15, 23, 42, 0.16), inset 0 -6px 0 rgba(15, 23, 42, 0.05);
+    }
+    .bot-screen {
+      position: relative;
+      height: 140px;
+      border-radius: 32px;
+      background: #0b1a17;
+      overflow: hidden;
+      transition: background 0.5s ease;
+    }
+    .bot-eyes {
+      position: absolute;
+      top: 42px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 54px;
+    }
+    .bot-eye {
+      width: 26px;
+      height: 34px;
+      border-radius: 14px;
+      background: #6ee7b7;
+      box-shadow: 0 0 14px rgba(110, 231, 183, 0.8);
+      transition: all 0.4s var(--ease);
+      animation: blinkEye 4s infinite;
+    }
+    @keyframes blinkEye { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+    .bot-brow {
+      position: absolute;
+      top: 28px;
+      width: 30px;
+      height: 5px;
+      border-radius: 4px;
+      background: #fcd34d;
+      opacity: 0;
+      transition: all 0.4s var(--ease);
+    }
+    .bot-brow.l { left: calc(50% - 56px); }
+    .bot-brow.r { left: calc(50% + 26px); }
+    .bot-mouth {
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      width: 48px;
+      height: 22px;
+      transform: translateX(-50%);
+      border: 5px solid #6ee7b7;
+      border-top: none;
+      border-radius: 0 0 40px 40px;
+      transition: all 0.4s var(--ease);
+    }
+    .bot-cheek {
+      position: absolute;
+      top: 86px;
+      width: 18px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(251, 113, 133, 0.6);
+      transition: opacity 0.4s;
+    }
+    .bot-cheek.l { left: 38px; }
+    .bot-cheek.r { right: 38px; }
+    .bot-base {
+      width: 150px;
+      height: 26px;
+      margin: -4px auto 0;
+      background: #e2e8f0;
+      border-radius: 0 0 22px 22px;
+      box-shadow: inset 0 6px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    /* moods */
+    .bot.worried .bot-screen { background: #1f1407; }
+    .bot.worried .bot-eye { background: #fcd34d; box-shadow: 0 0 14px rgba(252, 211, 77, 0.8); height: 26px; }
+    .bot.worried .bot-brow { opacity: 1; }
+    .bot.worried .bot-brow.l { transform: rotate(-18deg); }
+    .bot.worried .bot-brow.r { transform: rotate(18deg); }
+    .bot.worried .bot-mouth { border: 5px solid #fcd34d; border-bottom: none; border-radius: 40px 40px 0 0; bottom: 22px; width: 40px; height: 16px; }
+    .bot.worried .bot-cheek { opacity: 0; }
+
+    .bot.sprouting .bot-screen { background: #071a10; }
+    .bot.sprouting .bot-eye { height: 10px; border-radius: 10px 10px 0 0; margin-top: 14px; background: #86efac; animation: none; }
+    .bot.sprouting .bot-mouth { width: 20px; height: 20px; border: 5px solid #86efac; border-radius: 50%; }
+
+    .bot.harvest .bot-screen { background: #1a0b07; }
+    .bot.harvest .bot-eye { background: #fb923c; box-shadow: 0 0 14px rgba(251, 146, 60, 0.8); height: 18px; border-radius: 18px 18px 4px 4px; margin-top: 8px; }
+    .bot.harvest .bot-mouth { border-color: #fb923c; width: 60px; height: 28px; }
+
+    .bot-bubble {
+      max-width: 320px;
+      margin: 1.8rem auto 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: 18px;
+      padding: 0.9rem 1.1rem;
+      font-weight: 600;
+      font-size: 0.93rem;
+      box-shadow: var(--shadow-sm);
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+    .bot-bubble i { color: var(--brand-green-dark); font-size: 1.2rem; }
+
+    .mood-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+    }
+    .mood-buttons button {
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid var(--border-light);
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--text-secondary);
+      padding: 0.45rem 0.9rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .mood-buttons button.on, .mood-buttons button:hover {
+      background: var(--text-primary);
+      color: #fff;
+      border-color: var(--text-primary);
+    }
+
+    .feature-rows { margin-top: 1.8rem; display: grid; gap: 1rem; }
+    .feature-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .feature-row i {
+      flex: 0 0 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--brand-green-dark);
+    }
+    .feature-row strong { display: block; font-size: 1rem; }
+    .feature-row span { color: var(--text-secondary); font-size: 0.93rem; }
+
+    /* ==========================================================================
+       APP SHOWCASE
+       ========================================================================== */
+    .app-showcase {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 4rem 3rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .app-showcase::after {
+      content: "";
+      position: absolute;
+      top: -160px;
+      left: -120px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: var(--brand-gradient);
+      opacity: 0.16;
+      filter: blur(30px);
+      pointer-events: none;
+    }
+    .app-container {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .app-info h3 {
+      font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.12;
+      margin: 0.5rem 0 1rem;
+    }
+    .app-info p { color: #94a3b8; font-size: 1.05rem; margin-bottom: 1.4rem; }
+    .app-feats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem 1.2rem;
+      margin-bottom: 2rem;
+      list-style: none;
+    }
+    .app-feats li { display: flex; gap: 10px; align-items: center; font-size: 0.93rem; color: #e2e8f0; font-weight: 600; }
+    .app-feats i { color: #6ee7b7; }
+    .app-preview-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+    }
+    .browser-bar { display: flex; gap: 6px; margin-bottom: 0.9rem; align-items: center; }
+    .browser-bar span { width: 10px; height: 10px; border-radius: 50%; background: #475569; }
+    .browser-bar span:nth-child(1) { background: #f87171; }
+    .browser-bar span:nth-child(2) { background: #fbbf24; }
+    .browser-bar span:nth-child(3) { background: #4ade80; }
+    .browser-bar em {
+      flex: 1;
+      margin-left: 8px;
+      font-style: normal;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 0.2rem 0.6rem;
+    }
+    .app-preview-card img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ==========================================================================
+       APK DOWNLOAD
+       ========================================================================== */
+    #download { padding-top: 1rem; }
+    .download-section {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 3rem;
+      box-shadow: var(--shadow-md);
+    }
+    .download-section::before {
+      content: "";
+      position: absolute;
+      top: -140px;
+      right: -140px;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: var(--brand-gradient);
+      opacity: 0.08;
+      pointer-events: none;
+    }
+    .download-container {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .download-info h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.8px; margin: 0.2rem 0 1rem; line-height: 1.15; }
+    .download-info > p { color: var(--text-secondary); font-size: 1.03rem; margin-bottom: 1.6rem; }
+    .apk-meta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.8rem; }
+    .apk-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.42rem 0.95rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: 50px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .apk-meta i { color: var(--brand-green-dark); }
+    .install-steps {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+    }
+    .install-steps h4 { font-size: 1.03rem; font-weight: 700; margin-bottom: 1.2rem; }
+    .install-steps ol { list-style: none; counter-reset: step; }
+    .install-steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 0.9rem;
+      font-size: 0.93rem;
+      color: var(--text-secondary);
+    }
+    .install-steps li:last-child { margin-bottom: 0; }
+    .install-steps li::before {
+      content: counter(step);
+      flex: 0 0 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--brand-gradient);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+    }
+    .download-note { margin-top: 1.1rem; font-size: 0.82rem; color: var(--text-muted); }
+
+    /* ==========================================================================
+       PROJECTS (PARUGMON / PANAKOT)
+       ========================================================================== */
+    .split-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .split-image { position: relative; }
+    .split-image img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-light);
+    }
+    .split-image .float-card {
+      position: absolute;
+      right: -18px;
+      bottom: -22px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+    .float-card i {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--brand-gradient);
+      color: #fff;
+    }
+    .float-card small { display: block; color: var(--text-muted); font-weight: 600; font-size: 0.78rem; }
+    .split-text p { color: var(--text-secondary); font-size: 1.05rem; margin-top: 1rem; }
+    .split-text p strong { color: var(--text-primary); }
+
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0.8rem;
+      align-items: center;
+      margin-top: 1.8rem;
+    }
+    .ba {
+      padding: 1rem 1.1rem;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .ba small { display: block; font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.2rem; }
+    .ba.before { background: #fef2f2; color: #991b1b; }
+    .ba.after { background: #ecfdf5; color: #065f46; }
+    .before-after > i { color: var(--text-muted); }
+
+    .panakot {
+      margin-top: 5rem;
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      background: linear-gradient(135deg, #fffbeb 0%, #ecfdf5 100%);
+      border: 1px solid rgba(234, 179, 8, 0.25);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .panakot h3 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; letter-spacing: -0.8px; line-height: 1.15; }
+    .panakot p { color: var(--text-secondary); margin-top: 0.9rem; }
+    .panakot-list { display: grid; gap: 0.8rem; }
+    .panakot-list div {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      font-weight: 600;
+      font-size: 0.93rem;
+    }
+    .panakot-list i { color: #ca8a04; width: 20px; text-align: center; }
+
+    /* ==========================================================================
+       PRODUCE
+       ========================================================================== */
+    .species-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .species-chips span {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: 50px;
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-light);
+    }
+    .species-chips span.endangered {
+      background: rgba(234, 179, 8, 0.1);
+      color: #a16207;
+      border-color: rgba(234, 179, 8, 0.3);
+    }
+    .legend { margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 8px; align-items: center; }
+    .legend b { width: 12px; height: 12px; border-radius: 4px; background: rgba(234, 179, 8, 0.35); }
+
+    /* ==========================================================================
+       BUSINESS / MODEL
+       ========================================================================== */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+      margin-bottom: 1.6rem;
+    }
+    .kpi {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .kpi strong {
+      display: block;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .kpi span { color: var(--text-secondary); font-weight: 600; }
+
+    /* ==========================================================================
+       OPEN DATA + QUOTE
+       ========================================================================== */
+    .open-data {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-md);
+    }
+    .data-flow { display: grid; gap: 0.7rem; }
+    .data-flow div {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 1rem 1.1rem;
+      border-radius: 14px;
+      background: var(--bg-subtle);
+      font-weight: 600;
+    }
+    .data-flow div i {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--bg-surface);
+      color: var(--brand-blue);
+      box-shadow: var(--shadow-sm);
+    }
+    .data-flow small { display: block; color: var(--text-muted); font-weight: 500; }
+
+    .founder {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .founder-photo {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      aspect-ratio: 4 / 5;
+      background: var(--bg-subtle);
+    }
+    .founder-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+    .founder-photo figcaption {
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    .founder-photo figcaption strong { display: block; font-size: 1rem; }
+    .founder-photo figcaption span { color: var(--text-muted); font-weight: 600; }
+    blockquote {
+      font-size: clamp(1.4rem, 2.8vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      line-height: 1.3;
+    }
+    blockquote::before {
+      content: "\201C";
+      display: block;
+      font-size: 4.5rem;
+      line-height: 0.6;
+      margin-bottom: 0.6rem;
+      color: var(--brand-green);
+    }
+    .quote-body { color: var(--text-secondary); font-size: 1.05rem; margin-top: 1.4rem; }
+    .sign-off { margin-top: 1.4rem; font-weight: 800; font-size: 1.1rem; }
+
+    /* ==========================================================================
+       CTA BAND
+       ========================================================================== */
+    .cta-band {
+      text-align: center;
+      background: var(--brand-gradient);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(2, 132, 199, 0.25);
+    }
+    .cta-band::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+    }
+    .cta-band h2 { position: relative; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -1.2px; line-height: 1.12; }
+    .cta-band p { position: relative; max-width: 640px; margin: 1rem auto 2rem; color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; }
+    .cta-band .btn-group { position: relative; }
+    .btn-white { background: #fff; color: var(--text-primary); }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2); }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-light);
+      padding: 4rem 1.5rem 2rem;
+      margin-top: 3rem;
+    }
+    .footer-content {
+      max-width: 1240px;
+      margin: 0 auto 3rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+    }
+    .footer-section h4 { font-weight: 700; font-size: 1rem; margin-bottom: 1.1rem; }
+    .footer-section p, .footer-section a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.6rem;
+      font-size: 0.93rem;
+      transition: color 0.25s ease;
+    }
+    .footer-section a:hover { color: var(--brand-green-dark); }
+    .footer-section i { width: 18px; color: var(--brand-green-dark); }
+    .footer-motto { margin-top: 1rem; font-weight: 800; color: var(--text-primary) !important; }
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border-light);
+      padding-top: 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .to-top {
+      position: fixed;
+      right: 1.2rem;
+      bottom: 1.2rem;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: var(--text-primary);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: var(--transition);
+      z-index: 900;
+    }
+    .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .to-top:hover { background: var(--brand-green-dark); }
+
+    /* ==========================================================================
+       RESPONSIVE
+       ========================================================================== */
+    @media (max-width: 1080px) {
+      .nav-links { gap: 1.1rem; }
+      .nav-links a { font-size: 0.86rem; }
+    }
+
+    @media (max-width: 992px) {
+      .meaning, .product-panel.active, .sprout-wrap, .app-container, .download-container,
+      .split-container, .panakot, .open-data, .founder { grid-template-columns: 1fr; }
+      .product-panel { padding: 2rem; gap: 2rem; }
+      .product-visual { max-width: 460px; width: 100%; margin: 0 auto; }
+      .os-flow { grid-template-columns: 1fr; }
+      .os-link { width: 2px; height: 34px; margin: 0 auto; background-image: linear-gradient(180deg, #6ee7b7 50%, transparent 50%); background-size: 2px 12px; animation-name: flowV; }
+      @keyframes flowV { to { background-position: 0 12px; } }
+      .timeline { grid-template-columns: 1fr; }
+      .timeline::before { top: 0; bottom: 0; left: 27px; right: auto; width: 2px; height: auto; background: linear-gradient(180deg, var(--brand-green), var(--brand-blue), #8b5cf6); }
+      .tl-step { padding-left: 76px; }
+      .tl-dot { position: absolute; left: 0; top: 0; }
+      .kpi-row { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr 1fr; }
+      .founder-photo { max-width: 420px; }
+      .split-image .float-card { right: 12px; }
+    }
+
+    @media (max-width: 860px) {
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.6rem 1rem 1.2rem;
+        background: rgba(255, 255, 255, 0.97);
+        border-bottom: 1px solid var(--border-light);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-8px);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s var(--ease);
+      }
+      .nav-links.open { transform: none; opacity: 1; pointer-events: auto; }
+      .nav-links li a { display: block; padding: 0.8rem 0.6rem; font-size: 1rem; }
+      .nav-links .nav-cta { justify-content: center; margin-top: 0.6rem; }
+    }
+
+    @media (max-width: 640px) {
+      section { padding: 4.5rem 1rem; }
+      .hero { padding: 7.5rem 1rem 3.5rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; margin-top: 3rem; }
+      .btn { width: 100%; justify-content: center; }
+      .ecosystem, .app-showcase, .download-section, .panakot, .open-data, .product-panel { padding: 2rem 1.25rem; }
+      .meaning-word { padding: 2.2rem 1.6rem; }
+      .spec-grid, .app-feats { grid-template-columns: 1fr; }
+      .before-after { grid-template-columns: 1fr; }
+      .before-after > i { transform: rotate(90deg); justify-self: center; }
+      .footer-content { grid-template-columns: 1fr; }
+      .product-tab { font-size: 0.85rem; padding: 0.6rem 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
 </head>
-<body>
+<body class="is-loading">
 
-    <main class="maintenance-card" role="main">
-        <!-- Animated Dual Gear SVG Icon -->
-        <div class="icon-wrapper" aria-hidden="true">
-            <svg class="gear-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-            <svg class="gear-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
+  <!-- =====================================================================
+       1-SECOND LOADING SCREEN
+       ===================================================================== -->
+  <div id="loader" role="status" aria-label="Loading BUHÌ IntelliFarm">
+    <div class="loader-inner">
+      <div class="loader-mark">
+        <div class="loader-ring"></div>
+        <div class="loader-sprout" aria-hidden="true">
+          <svg viewBox="0 0 60 60">
+            <defs>
+              <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#0284c7"/>
+              </linearGradient>
+            </defs>
+            <path class="stem" d="M30 52 L30 24" stroke="url(#lg)" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <path class="leaf l" d="M30 30 C18 30 10 22 10 12 C20 12 30 18 30 30 Z" fill="#10b981"/>
+            <path class="leaf r" d="M30 26 C30 14 38 6 50 6 C50 18 42 26 30 26 Z" fill="#0284c7"/>
+            <ellipse class="drop" cx="30" cy="55" rx="12" ry="2.5" fill="#0284c7" opacity="0.25"/>
+          </svg>
+        </div>
+      </div>
+      <div class="loader-word">
+        <span>B</span><span>U</span><span>H</span><span class="gradient-text">Ì</span><span class="sub">IntelliFarm</span>
+      </div>
+      <div class="loader-bar"><i></i></div>
+      <div class="loader-tag">Agri-Bots · One Smarter Farm</div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       NAVIGATION
+       ===================================================================== -->
+  <header id="top">
+    <div class="header-bg"></div>
+    <nav>
+      <a href="#home" class="logo" aria-label="BUHÌ IntelliFarm home">
+        <img src="logo.png" alt="BUHÌ IntelliFarm logo" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+        <span class="logo-fallback">B</span>
+        <span class="logo-text">BUHÌ <span class="gradient-text">IntelliFarm</span><small>Systems · Agri-Bots</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><i class="fa-solid fa-bars"></i></button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#ecosystem">Agri-Bots</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#sprout">Sprout</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="https://buhi-test.vercel.app/" target="_blank" rel="noopener" class="nav-cta">Launch App <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- =====================================================================
+         HERO
+         ===================================================================== -->
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-grid"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge reveal">
+          <b>NEW</b> Meet Sprout, our Agri Pet-Bot for the National Level <i class="fa-solid fa-arrow-right" style="font-size:0.75rem"></i>
         </div>
 
-        <!-- Status Indicator -->
-        <div class="status-pill">
-            <span class="status-dot"></span>
-            <span>Scheduled Upgrade</span>
-        </div>
+        <h1 class="reveal delay-1">
+          Manage your whole farm<br>with <span class="gradient-text">one tap.</span>
+        </h1>
 
-        <!-- Main Heading -->
-        <h1>SERVER MAINTENANCE</h1>
-
-        <!-- Return Date Subheading -->
-        <p class="return-message">We'll be back on December 1, 2026</p>
-
-        <!-- Helpful Context -->
-        <p class="description">
-            We are currently performing scheduled infrastructure upgrades to improve performance and reliability. Thank you for your patience.
+        <p class="hero-lead reveal delay-2">
+          Every farmer knows the question: <em>"Did I miss something?"</em> <strong>BUHÌ IntelliFarm Systems</strong> builds <strong>Agri-Bots</strong>: locally made IoT farm gadgets, one monitoring app, and a friendly desktop robot, so you can check your water, fish and crops without guessing.
         </p>
-    </main>
 
+        <div class="btn-group reveal delay-3">
+          <a href="#products" class="btn btn-primary"><i class="fa-solid fa-microchip"></i> Explore Agri-Bots</a>
+          <a href="https://buhi-test.vercel.app/" target="_blank" rel="noopener" class="btn btn-secondary"><i class="fa-solid fa-desktop"></i> Try the Live App</a>
+          <!-- APK download button (link is set in the APK CONFIG at the bottom of this file) -->
+          <a href="#download" data-apk-link target="_blank" rel="noopener" class="btn btn-dark"><i class="fa-brands fa-android"></i> Download APK</a>
+        </div>
+
+        <div class="hero-stats reveal delay-4">
+          <div class="hero-stat"><strong class="gradient-text">4</strong><span>Agri-Bots in one system</span></div>
+          <div class="hero-stat"><strong class="gradient-text">1</strong><span>App for the whole farm</span></div>
+          <div class="hero-stat"><strong class="gradient-text">170%</strong><span>Projected ROI</span></div>
+          <div class="hero-stat"><strong class="gradient-text">24/7</strong><span>Real-time telemetry</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         STORY / MEANING OF BUHI
+         ===================================================================== -->
+    <section id="story">
+      <div class="meaning">
+        <div class="meaning-word reveal">
+          <div class="word">Buhì</div>
+          <div class="pron">/bu·hì/ · Hiligaynon &amp; Capiznon</div>
+          <ol>
+            <li>Life.</li>
+            <li>The sprout breaking out of a seed.</li>
+            <li>The fry or fingerling in a pond.</li>
+            <li>Something that has just started living.</li>
+          </ol>
+        </div>
+        <div class="meaning-text reveal delay-1">
+          <span class="eyebrow">Our Story</span>
+          <h2 class="h2">Young, new, and just beginning to grow.</h2>
+          <p>
+            BUHÌ started at home. When <strong>African Swine Fever (ASF)</strong> swept through our community in <strong>Brgy. Bun-od, Cuartero, Capiz</strong>, backyard pig pens across the barangay went silent and empty.
+          </p>
+          <p>
+            We are children of backyard farmers with a background in <strong>Agricultural and Biosystems Engineering</strong> and <strong>Computer Science</strong>. We saw those empty pens as an opportunity: turn them into <strong>biosecure, high-yield aquaponics farms</strong> run by real-time IoT monitoring and automation.
+          </p>
+          <p>
+            We don't just build the technology. <strong>We farm with it</strong>, and we grow real harvests on our own smart demo farm.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         JOURNEY TIMELINE
+         ===================================================================== -->
+    <section id="journey" style="padding-top: 2rem;">
+      <div class="section-title reveal">
+        <span class="eyebrow">Our Journey</span>
+        <h2>It started with one problem: water.</h2>
+        <p class="lede">Each stage of competition added a new Agri-Bot, and every device connects to the same system.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-step reveal delay-1">
+          <div class="tl-dot"><i class="fa-solid fa-trophy"></i></div>
+          <div class="tl-level">Provincial Level · Winner</div>
+          <h3>AquaSense</h3>
+          <p style="color: var(--text-secondary);">An IoT water monitor that lets a farmer know the condition of the pond without guessing. It won as our <strong>Smart Environment Quality Monitoring System</strong>, and the grant built the device and rehabilitated our demo farm.</p>
+          <div class="tl-tags"><span>Water quality</span><span>Demo farm</span></div>
+        </div>
+        <div class="tl-step reveal delay-2">
+          <div class="tl-dot"><i class="fa-solid fa-layer-group"></i></div>
+          <div class="tl-level">Regional Level</div>
+          <h3>AutoFeed + Water Automation</h3>
+          <p style="color: var(--text-secondary);">We added an <strong>IoT automatic fish feeder</strong>, an <strong>automated water dispenser</strong> and a <strong>Recirculating Aquaculture System (RAS)</strong>, all integrated into one operating software ecosystem.</p>
+          <div class="tl-tags"><span>Feeding</span><span>Water valves</span><span>RAS</span></div>
+        </div>
+        <div class="tl-step reveal delay-3">
+          <div class="tl-dot"><i class="fa-solid fa-robot"></i></div>
+          <div class="tl-level">National Level · New</div>
+          <h3>Sprout + Project Panakot</h3>
+          <p style="color: var(--text-secondary);">Sprout, an ESP32-powered desktop pet-bot, becomes the brain and face of the system. Next comes <strong>Project Panakot</strong>, a smart greenhouse where new gadgets are tested before they reach the field.</p>
+          <div class="tl-tags"><span>Pet-Bot</span><span>Smart greenhouse</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ECOSYSTEM / FARM OS
+         ===================================================================== -->
+    <section id="ecosystem">
+      <div class="ecosystem reveal">
+        <div class="section-title" style="position:relative;">
+          <span class="eyebrow">The BUHÌ Farm Operating System</span>
+          <h2>Many gadgets. One system. One app.</h2>
+          <p class="lede">Your phone has an operating system that connects your camera, your apps and your messages in one place. Farms never had that. Agri-Bots is an operating system for agriculture: every device on the farm connected into one system, and Sprout is its face.</p>
+        </div>
+
+        <div class="os-flow">
+          <div class="os-col">
+            <h4>Agri-Gadgets</h4>
+            <div class="os-item"><i class="fa-solid fa-droplet"></i><div>AquaSense<small>Water &amp; environment</small></div></div>
+            <div class="os-item"><i class="fa-solid fa-fish"></i><div>AutoFeed<small>Timed fish feeding</small></div></div>
+            <div class="os-item"><i class="fa-solid fa-faucet-drip"></i><div>Water Dispenser + RAS<small>Valves, refill &amp; filtration</small></div></div>
+          </div>
+          <div class="os-link" aria-hidden="true"></div>
+          <div class="os-col os-core">
+            <div class="core-icon"><i class="fa-solid fa-cloud"></i></div>
+            <h3>BUHÌ App</h3>
+            <p>Collects every reading in real time, controls every device, and logs the data for research.</p>
+          </div>
+          <div class="os-link" aria-hidden="true"></div>
+          <div class="os-col">
+            <h4>You, anywhere</h4>
+            <div class="os-item"><i class="fa-solid fa-robot"></i><div>Sprout Pet-Bot<small>Status at a glance</small></div></div>
+            <div class="os-item"><i class="fa-solid fa-mobile-screen"></i><div>Android App<small>Alerts in the field</small></div></div>
+            <div class="os-item"><i class="fa-solid fa-display"></i><div>Web Dashboard<small>Full farm control</small></div></div>
+          </div>
+        </div>
+
+        <p class="os-tagline">Agri-Bots. <span>One system. One app. One smarter farm.</span></p>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         PRODUCTS
+         ===================================================================== -->
+    <section id="products">
+      <div class="section-title reveal">
+        <span class="eyebrow">Our Products</span>
+        <h2>Meet the Agri-Bots family</h2>
+        <p class="lede">Locally designed, built and field-tested on our own demo farm in Capiz. Each gadget works alone, and works better together.</p>
+      </div>
+
+      <div class="product-tabs reveal" role="tablist" aria-label="BUHÌ products">
+        <button class="product-tab" role="tab" aria-selected="true" aria-controls="p-aquasense" id="t-aquasense"><i class="fa-solid fa-droplet"></i> AquaSense</button>
+        <button class="product-tab" role="tab" aria-selected="false" aria-controls="p-autofeed" id="t-autofeed"><i class="fa-solid fa-fish"></i> AutoFeed</button>
+        <button class="product-tab" role="tab" aria-selected="false" aria-controls="p-water" id="t-water"><i class="fa-solid fa-faucet-drip"></i> Water Dispenser + RAS</button>
+        <button class="product-tab" role="tab" aria-selected="false" aria-controls="p-sprout" id="t-sprout"><i class="fa-solid fa-robot"></i> Sprout</button>
+        <button class="product-tab" role="tab" aria-selected="false" aria-controls="p-app" id="t-app"><i class="fa-solid fa-mobile-screen"></i> BUHÌ App</button>
+      </div>
+
+      <!-- AquaSense -->
+      <div class="product-panel active reveal" role="tabpanel" id="p-aquasense" aria-labelledby="t-aquasense">
+        <div class="product-visual">
+          <span class="stage-tag"><i class="fa-solid fa-trophy" style="color:#ca8a04"></i> Provincial Winner</span>
+          <img src="aquasense.jpeg" alt="AquaSense IoT water quality monitoring device" onerror="this.parentElement.classList.add('no-img')">
+          <div class="ph"><div class="ph-icon"><i class="fa-solid fa-droplet"></i></div><small>Add aquasense.jpeg</small></div>
+        </div>
+        <div class="product-info">
+          <span class="badge-pill">Agri-Gadget · Monitoring</span>
+          <h3>AquaSense</h3>
+          <p class="sub">IoT Smart Environment &amp; Water Quality Monitoring Device</p>
+          <p>Our first Agri-Bot and the one that started it all. AquaSense keeps watch over your pond around the clock and sends live readings to the app, so you know the water is right before your fish feel that it is not.</p>
+          <div class="indicator-list">
+            <div class="status-dot"><span class="dot green"></span> SYSTEM ON</div>
+            <div class="status-dot"><span class="dot blue"></span> IOT ACTIVE</div>
+            <div class="status-dot"><span class="dot yellow"></span> DATA LOGGING</div>
+          </div>
+          <div class="spec-grid">
+            <div class="spec"><i class="fa-solid fa-vial-circle-check"></i><div>Multi-sensor array<small>pH, temperature, dissolved oxygen, water level</small></div></div>
+            <div class="spec"><i class="fa-solid fa-wifi"></i><div>Dual connectivity<small>WiFi &amp; IoT antenna</small></div></div>
+            <div class="spec"><i class="fa-solid fa-bolt"></i><div>Automation triggers<small>Filtration &amp; pump control</small></div></div>
+            <div class="spec"><i class="fa-solid fa-shield-halved"></i><div>Rugged enclosure<small>LCD readout &amp; status LEDs</small></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AutoFeed -->
+      <div class="product-panel" role="tabpanel" id="p-autofeed" aria-labelledby="t-autofeed">
+        <div class="product-visual">
+          <span class="stage-tag"><i class="fa-solid fa-layer-group" style="color:var(--brand-blue)"></i> Regional Level</span>
+          <!-- Add a photo named autofeed.jpg next to this file to replace the illustration -->
+          <img src="autofeed.jpg" alt="AutoFeed IoT automatic fish feeder" onerror="this.parentElement.classList.add('no-img')">
+          <div class="ph"><div class="ph-icon"><i class="fa-solid fa-fish"></i></div><small>IoT Automatic Fish Feeder</small></div>
+        </div>
+        <div class="product-info">
+          <span class="badge-pill">Agri-Gadget · Automation</span>
+          <h3>AutoFeed</h3>
+          <p class="sub">IoT Automatic Fish Feeder</p>
+          <p>Feeding on time, every time, even when you are away. AutoFeed dispenses the right amount on schedule, weighs what is left in the hopper, and keeps the feed dry.</p>
+          <div class="spec-grid">
+            <div class="spec"><i class="fa-solid fa-clock"></i><div>Timed feed dispense<small>Set schedules per pond</small></div></div>
+            <div class="spec"><i class="fa-solid fa-mobile-screen"></i><div>Remote control<small>Feed now from the app</small></div></div>
+            <div class="spec"><i class="fa-solid fa-weight-scale"></i><div>Load cell<small>Tracks remaining feed by weight</small></div></div>
+            <div class="spec"><i class="fa-solid fa-temperature-half"></i><div>Humidity sensor<small>Warns before feed spoils</small></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Water Dispenser + RAS -->
+      <div class="product-panel" role="tabpanel" id="p-water" aria-labelledby="t-water">
+        <div class="product-visual">
+          <span class="stage-tag"><i class="fa-solid fa-layer-group" style="color:var(--brand-blue)"></i> Regional Level</span>
+          <!-- Add a photo named water-system.jpg next to this file to replace the illustration -->
+          <img src="water-system.jpg" alt="Automated water dispenser and recirculating aquaculture system" onerror="this.parentElement.classList.add('no-img')">
+          <div class="ph"><div class="ph-icon"><i class="fa-solid fa-faucet-drip"></i></div><small>Automated Water Valves &amp; RAS</small></div>
+        </div>
+        <div class="product-info">
+          <span class="badge-pill">Agri-Gadget · Water</span>
+          <h3>Automated Water Dispenser + RAS</h3>
+          <p class="sub">Smart valves, auto-refill and recirculating aquaculture</p>
+          <p>Clean water is everything in aquaponics. Our automated valves and Recirculating Aquaculture System filter, recycle and top up the water on their own, acting on AquaSense readings so conditions stay steady for fish and plants.</p>
+          <div class="spec-grid">
+            <div class="spec"><i class="fa-solid fa-rotate"></i><div>Recirculation<small>Filters and reuses pond water</small></div></div>
+            <div class="spec"><i class="fa-solid fa-arrow-up-from-water-pump"></i><div>Auto refill<small>Keeps water level steady</small></div></div>
+            <div class="spec"><i class="fa-solid fa-link"></i><div>Sensor-linked<small>Triggered by AquaSense data</small></div></div>
+            <div class="spec"><i class="fa-solid fa-leaf"></i><div>Saves water<small>Less waste, less labor</small></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sprout -->
+      <div class="product-panel" role="tabpanel" id="p-sprout" aria-labelledby="t-sprout">
+        <div class="product-visual">
+          <span class="stage-tag"><i class="fa-solid fa-star" style="color:#7c3aed"></i> National Level · New</span>
+          <!-- Add a photo named sprout.jpg next to this file to replace the illustration -->
+          <img src="sprout.jpg" alt="Sprout ESP32 desktop pet-bot" onerror="this.parentElement.classList.add('no-img')">
+          <div class="ph"><div class="ph-icon"><i class="fa-solid fa-robot"></i></div><small>ESP32 Agri Pet-Bot</small></div>
+        </div>
+        <div class="product-info">
+          <span class="badge-pill green">Pet-Bot · Hub</span>
+          <h3>Sprout</h3>
+          <p class="sub">The brain and the face of the system</p>
+          <p>A desktop companion robot that gathers real-time data from every networked farm device and turns it into short, friendly status updates. One look at Sprout's face tells you how your farm is doing.</p>
+          <div class="spec-grid">
+            <div class="spec"><i class="fa-solid fa-microchip"></i><div>ESP32-powered<small>Central data aggregator</small></div></div>
+            <div class="spec"><i class="fa-solid fa-face-smile"></i><div>Mood faces<small>Happy, worried, harvest-ready</small></div></div>
+            <div class="spec"><i class="fa-solid fa-cloud-sun-rain"></i><div>Weather updates<small>Plan your farm day</small></div></div>
+            <div class="spec"><i class="fa-solid fa-calendar-days"></i><div>Crop calendar<small>Sprouting to harvest</small></div></div>
+          </div>
+          <a href="#sprout" class="btn btn-secondary" style="margin-top:1.6rem;">Say hi to Sprout <i class="fa-solid fa-arrow-down"></i></a>
+        </div>
+      </div>
+
+      <!-- App -->
+      <div class="product-panel" role="tabpanel" id="p-app" aria-labelledby="t-app">
+        <div class="product-visual">
+          <span class="stage-tag"><i class="fa-solid fa-circle" style="color:#22c55e;font-size:0.55rem"></i> Live now</span>
+          <img src="dashboard.jpg" alt="BUHÌ web dashboard" onerror="this.parentElement.classList.add('no-img')">
+          <div class="ph"><div class="ph-icon"><i class="fa-solid fa-mobile-screen"></i></div><small>Web &amp; Android app</small></div>
+        </div>
+        <div class="product-info">
+          <span class="badge-pill">Software · Farm OS</span>
+          <h3>BUHÌ App</h3>
+          <p class="sub">One monitoring application for every Agri-Bot</p>
+          <p>The unified web and Android application that ties everything together. Monitor water quality, run pumps and feeders, and get alerts on your phone, from the pond side or from across town.</p>
+          <div class="spec-grid">
+            <div class="spec"><i class="fa-solid fa-chart-line"></i><div>Live dashboards<small>Real-time sensor charts</small></div></div>
+            <div class="spec"><i class="fa-solid fa-toggle-on"></i><div>Remote control<small>Pumps, valves, feeders</small></div></div>
+            <div class="spec"><i class="fa-solid fa-bell"></i><div>Smart alerts<small>Know before it's a problem</small></div></div>
+            <div class="spec"><i class="fa-solid fa-database"></i><div>Data logging<small>History for research</small></div></div>
+          </div>
+          <div class="btn-group" style="justify-content:flex-start; margin-top:1.6rem;">
+            <a href="https://buhi-test.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary">Open Web App <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a href="#download" class="btn btn-secondary"><i class="fa-brands fa-android android"></i> Get the APK</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SPROUT INTERACTIVE
+         ===================================================================== -->
+    <section id="sprout">
+      <div class="sprout-wrap">
+        <div class="sprout-stage reveal">
+          <div class="bot" id="bot" aria-hidden="true">
+            <div class="bot-leaf"><i></i></div>
+            <div class="bot-head">
+              <div class="bot-screen">
+                <span class="bot-brow l"></span><span class="bot-brow r"></span>
+                <div class="bot-eyes"><span class="bot-eye"></span><span class="bot-eye"></span></div>
+                <span class="bot-cheek l"></span><span class="bot-cheek r"></span>
+                <span class="bot-mouth"></span>
+              </div>
+            </div>
+            <div class="bot-base"></div>
+          </div>
+          <div class="bot-bubble" aria-live="polite"><i class="fa-solid fa-comment-dots" id="bubbleIcon"></i><span id="bubbleText">All good! Water pH 7.1, 28°C. Your fish are happy today.</span></div>
+          <div class="mood-buttons" role="group" aria-label="Preview Sprout's moods">
+            <button data-mood="happy" class="on">All well</button>
+            <button data-mood="worried">Pond alert</button>
+            <button data-mood="sprouting">Sprouting</button>
+            <button data-mood="harvest">Harvest time</button>
+          </div>
+        </div>
+
+        <div class="reveal delay-1">
+          <span class="eyebrow">Meet Sprout · National Level</span>
+          <h2 class="h2">Your farm, with a face.</h2>
+          <p style="color: var(--text-secondary); font-size:1.06rem; margin-top:1rem;">
+            Sprout is an ESP32-powered desktop pet robot that collects data from every Agri-Bot and tells you what matters in plain words. It smiles when all is well and looks worried when something needs you. Tap the buttons to see its moods.
+          </p>
+          <div class="feature-rows">
+            <div class="feature-row"><i class="fa-solid fa-satellite-dish"></i><div><strong>Collects every reading</strong><span>Water quality, environment and feeding status from all networked devices.</span></div></div>
+            <div class="feature-row"><i class="fa-solid fa-cloud-sun"></i><div><strong>Weather &amp; crop calendar</strong><span>Tells you when lettuce is still sprouting and when tomatoes are ready to harvest.</span></div></div>
+            <div class="feature-row"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Flags problems early</strong><span>Lets you know when your pond needs attention, before small issues become losses.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         APP SHOWCASE
+         ===================================================================== -->
+    <section id="app">
+      <div class="app-showcase reveal">
+        <div class="app-container">
+          <div class="app-info">
+            <span style="color: #6ee7b7; font-weight: 800; font-size: 0.8rem; letter-spacing: 1.5px;">WEB &amp; MOBILE DASHBOARD</span>
+            <h3>Your farm in your pocket.</h3>
+            <p>Check water parameters, run pump cycles, and see the status of every device in real time, all from one cloud app built for farmers.</p>
+            <ul class="app-feats">
+              <li><i class="fa-solid fa-circle-check"></i> Real-time telemetry</li>
+              <li><i class="fa-solid fa-circle-check"></i> Pump &amp; valve control</li>
+              <li><i class="fa-solid fa-circle-check"></i> Feeding schedules</li>
+              <li><i class="fa-solid fa-circle-check"></i> Field alerts on Android</li>
+            </ul>
+            <div class="btn-group" style="justify-content: flex-start;">
+              <a href="https://buhi-test.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary">Access Dashboard <i class="fa-solid fa-arrow-right"></i></a>
+              <a href="#download" class="btn btn-ghost-light"><i class="fa-brands fa-android android"></i> Get the Android App</a>
+            </div>
+          </div>
+          <div class="app-preview-card">
+            <div class="browser-bar"><span></span><span></span><span></span><em>buhi-test.vercel.app</em></div>
+            <img src="dashboard.jpg" alt="BUHÌ web dashboard interface" onerror="this.style.display='none'">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         APK DOWNLOAD
+         ===================================================================== -->
+    <section id="download">
+      <div class="download-section reveal">
+        <div class="download-container">
+          <div class="download-info">
+            <span class="badge-pill"><i class="fa-brands fa-android"></i> Android App</span>
+            <h2>Download the BUHÌ IntelliFarm App</h2>
+            <p>Monitor water quality, control pumps and feeders, and get farm alerts right on your phone, even out in the field.</p>
+
+            <!-- These values are filled in from the APK CONFIG at the bottom of the file -->
+            <div class="apk-meta">
+              <span><i class="fa-solid fa-code-branch"></i> Version <b data-apk-version>1.0.0</b></span>
+              <span><i class="fa-solid fa-hard-drive"></i> <b data-apk-size>~25 MB</b></span>
+              <span><i class="fa-solid fa-calendar-check"></i> Updated <b data-apk-updated>2026</b></span>
+              <span><i class="fa-brands fa-android"></i> Android 8.0+</span>
+            </div>
+
+            <a href="#download" data-apk-link target="_blank" rel="noopener" class="btn btn-primary">
+              <i class="fa-solid fa-download"></i> Download APK
+            </a>
+            <p class="download-note"><i class="fa-solid fa-shield-halved"></i> Direct download from the official BUHÌ IntelliFarm website.</p>
+          </div>
+
+          <div class="install-steps">
+            <h4><i class="fa-solid fa-list-check" style="color: var(--brand-blue); margin-right: 6px;"></i> How to install</h4>
+            <ol>
+              <li><span>Tap <strong>Download APK</strong> and wait for the file to finish.</span></li>
+              <li><span>Open the downloaded <strong>APK file</strong> from your notifications or Files app.</span></li>
+              <li><span>If asked, allow <strong>Install unknown apps</strong> for your browser or file manager.</span></li>
+              <li><span>Tap <strong>Install</strong>, then open BUHÌ IntelliFarm and log in.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         PROJECTS: PARUGMON & PANAKOT
+         ===================================================================== -->
+    <section id="projects">
+      <div class="section-title reveal">
+        <span class="eyebrow">Our Farms</span>
+        <h2>From an abandoned pig pen to a farm full of life</h2>
+      </div>
+
+      <div class="split-container" id="about">
+        <div class="split-image reveal">
+          <img src="parugmon.jpg" alt="Project Parugmon aquaponics greenhouse" onerror="this.style.display='none'">
+          <div class="float-card"><i class="fa-solid fa-seedling"></i><div>Project Parugmon<small>Smart aquaponics demo farm</small></div></div>
+        </div>
+        <div class="split-text reveal delay-1">
+          <span class="badge-pill green"><i class="fa-solid fa-circle-check"></i> Operating now</span>
+          <h3 class="h2" style="font-size: clamp(1.7rem,3vw,2.3rem);">Project Parugmon</h3>
+          <p>
+            Inspired by <strong>parugmon</strong>, a traditional fishing practice, our demo farm is an <strong>aquaponics greenhouse converted from an ASF-abandoned pig pen</strong>. What was once neglected is now full of life: lettuce, pechay and other greens grow on recycled water from the fish below.
+          </p>
+          <p>
+            Parugmon is where every Agri-Bot is built, tested and proven, with less labor, less water, and climate-resilient local food production.
+          </p>
+          <div class="before-after">
+            <div class="ba before"><small>Before</small>Idle, ASF-hit pig pen</div>
+            <i class="fa-solid fa-arrow-right"></i>
+            <div class="ba after"><small>After</small>Biosecure smart aquaponics farm</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panakot reveal">
+        <div>
+          <span class="badge-pill amber"><i class="fa-solid fa-hammer"></i> Next build</span>
+          <h3>Project Panakot</h3>
+          <p>
+            Parugmon proved that it works. <strong>Panakot will prove that it can grow.</strong> Our next project is a smart greenhouse for spices and herbs with a controlled climate, where new Agri-Bots are tested before they reach farmers' fields.
+          </p>
+        </div>
+        <div class="panakot-list">
+          <div><i class="fa-solid fa-pepper-hot"></i> Spices &amp; culinary herbs</div>
+          <div><i class="fa-solid fa-temperature-low"></i> Controlled climate greenhouse</div>
+          <div><i class="fa-solid fa-flask"></i> Test bed for new gadgets</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         PRODUCE & NATIVE SPECIES
+         ===================================================================== -->
+    <section id="commodities">
+      <div class="section-title reveal">
+        <span class="eyebrow">What We Grow</span>
+        <h2>Fresh harvests and native species</h2>
+        <p class="lede">Real fish and fresh greens from our own smart farm, sold directly to families, restaurants and food businesses.</p>
+      </div>
+      <div class="grid">
+        <div class="card reveal delay-1">
+          <div class="icon-tile"><i class="fa-solid fa-fish-fins"></i></div>
+          <h3>Fish &amp; Prawns</h3>
+          <p>High-value freshwater species raised in clean, monitored water:</p>
+          <div class="species-chips">
+            <span>Ulang (Giant Freshwater Prawn)</span><span>Pantat (Catfish)</span><span>Tilapia</span><span>Karpa (Upland Carp)</span>
+          </div>
+        </div>
+        <div class="card reveal delay-2">
+          <div class="icon-tile"><i class="fa-solid fa-dna"></i></div>
+          <h3>Native Species Breeding</h3>
+          <p>Our dream: a research and breeding hub for endangered native fish, so they are not lost from our rivers.</p>
+          <div class="species-chips">
+            <span class="endangered">Batod (Mudfish)</span><span class="endangered">Puyo</span><span class="endangered">Rami</span><span class="endangered">Bagtis</span>
+          </div>
+          <div class="legend"><b></b> Native species we aim to conserve</div>
+        </div>
+        <div class="card reveal delay-3">
+          <div class="icon-tile"><i class="fa-solid fa-seedling"></i></div>
+          <h3>Greens &amp; Vegetables</h3>
+          <p>Clean, nutrient-rich produce grown on recycled aquaponics water:</p>
+          <ul class="check-list">
+            <li>Fresh premium lettuce</li>
+            <li>Pechay &amp; kangkong</li>
+            <li>Culinary herbs &amp; spices</li>
+            <li>Microgreens</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         VISION / MISSION / VALUES
+         ===================================================================== -->
+    <section id="mission">
+      <div class="section-title reveal">
+        <span class="eyebrow">What Drives Us</span>
+        <h2>Vision, mission &amp; promise</h2>
+      </div>
+      <div class="grid">
+        <div class="card reveal delay-1">
+          <div class="icon-tile"><i class="fa-solid fa-eye"></i></div>
+          <h3>Our Vision</h3>
+          <p>To make BUHÌ IntelliFarm Western Visayas' premier research, breeding and demonstration hub for native freshwater species and sustainable smart agriculture.</p>
+        </div>
+        <div class="card reveal delay-2">
+          <div class="icon-tile"><i class="fa-solid fa-bullseye"></i></div>
+          <h3>Our Mission</h3>
+          <p>To make agricultural production smarter, more efficient, sustainable and accessible by giving smallholder farmers affordable, locally developed agri-tech that cuts manual work and protects local ecosystems.</p>
+        </div>
+        <div class="card reveal delay-3">
+          <div class="icon-tile"><i class="fa-solid fa-handshake-angle"></i></div>
+          <h3>Our Promise</h3>
+          <ul class="check-list">
+            <li>High-quality products and reliable service</li>
+            <li>Responsive support and transparent communication</li>
+            <li>Continuous research and innovation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         BUSINESS MODEL
+         ===================================================================== -->
+    <section id="business">
+      <div class="section-title reveal">
+        <span class="eyebrow">Business Model</span>
+        <h2>Built to be sustainable</h2>
+        <p class="lede">Two revenue streams, farm produce and Agri-Bots installations, so the technology funds itself and keeps improving.</p>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi reveal delay-1"><strong class="gradient-text">170%</strong><span>Projected return on investment</span></div>
+        <div class="kpi reveal delay-2"><strong class="gradient-text">1.5–2 yrs</strong><span>Payback period</span></div>
+        <div class="kpi reveal delay-3"><strong class="gradient-text">2</strong><span>Revenue streams: produce &amp; IoT systems</span></div>
+      </div>
+      <div class="grid">
+        <div class="card reveal delay-1">
+          <div class="icon-tile"><i class="fa-solid fa-gears"></i></div>
+          <h3>What We Do</h3>
+          <ul class="check-list">
+            <li>Build IoT concepts as Agri-Bots</li>
+            <li>Develop and maintain the unified app</li>
+            <li>Field-test and collect data at the demo farm</li>
+            <li>Harvest and deliver quality fish and greens</li>
+            <li>Sell and install systems for backyard farmers</li>
+          </ul>
+        </div>
+        <div class="card reveal delay-2">
+          <div class="icon-tile"><i class="fa-solid fa-store"></i></div>
+          <h3>Where to Find Us</h3>
+          <ul class="check-list">
+            <li>Direct farm sales &amp; farm visits</li>
+            <li>Facebook Page &amp; Marketplace</li>
+            <li>Agri fairs, exhibits &amp; showcases</li>
+            <li>Restaurant &amp; food business partners</li>
+            <li>Farm demonstrations &amp; research tours</li>
+          </ul>
+        </div>
+        <div class="card reveal delay-3">
+          <div class="icon-tile"><i class="fa-solid fa-users"></i></div>
+          <h3>Who We Serve</h3>
+          <ul class="check-list">
+            <li>Small-scale &amp; backyard farmers</li>
+            <li>Households and local consumers</li>
+            <li>Restaurants &amp; food businesses</li>
+            <li>Students, researchers &amp; agencies</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         RESEARCH & OPEN DATA
+         ===================================================================== -->
+    <section id="research">
+      <div class="open-data reveal">
+        <div>
+          <span class="eyebrow">Research &amp; Open Data</span>
+          <h2 class="h2">Every reading becomes knowledge.</h2>
+          <p style="color: var(--text-secondary); margin-top: 1rem; font-size: 1.04rem;">
+            Our goal is more than gadgets. Research and development is at our core. Every sensor reading and every harvest is logged, and we will publish the data we collect as <strong>open source on this website</strong>, so students, researchers and fellow farmers can learn, build and grow with us.
+          </p>
+        </div>
+        <div class="data-flow">
+          <div><i class="fa-solid fa-tower-broadcast"></i><span>Collect<small>Sensor readings from every Agri-Bot</small></span></div>
+          <div><i class="fa-solid fa-chart-column"></i><span>Learn<small>Harvest records &amp; field trials</small></span></div>
+          <div><i class="fa-solid fa-unlock"></i><span>Share<small>Open datasets for the community</small></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         FOUNDER QUOTE
+         ===================================================================== -->
+    <section id="team">
+      <div class="founder">
+        <figure class="founder-photo reveal">
+          <img src="founder.jpg" alt="April Paligumba holding the AquaSense device" onerror="this.parentElement.style.display='none'">
+          <figcaption><strong>April Paligumba</strong><span>Founder · ABE student, developer &amp; proud farmer</span></figcaption>
+        </figure>
+        <div class="reveal delay-1">
+          <span class="eyebrow">From Brgy. Bun-od, Cuartero, Capiz</span>
+          <blockquote>Young farmers should not have to choose between tradition and technology. They can have both.</blockquote>
+          <p class="quote-body">
+            Modern agriculture problems need modern agri-solutions. BUHÌ is a beginning, a sprout, and with your support it becomes a smarter future for the farmers around us.
+          </p>
+          <p class="sign-off">This is our agri-future. <span class="gradient-text">Join us at BUHÌ.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         CTA
+         ===================================================================== -->
+    <section id="contact-cta" style="padding-top: 1rem;">
+      <div class="cta-band reveal">
+        <h2>Agri-Bots. One system. One app.<br>One smarter farm.</h2>
+        <p>Visit our demo farm, partner with us, or bring Agri-Bots to your own backyard farm.</p>
+        <div class="btn-group">
+          <a href="mailto:buhi.intellifarm@gmail.com" class="btn btn-white"><i class="fa-solid fa-envelope"></i> Partner with us</a>
+          <a href="#download" data-apk-link target="_blank" rel="noopener" class="btn btn-ghost-light"><i class="fa-brands fa-android"></i> Download the App</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       FOOTER
+       ===================================================================== -->
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>BUHÌ IntelliFarm Systems</h4>
+        <p>Agri-Bots: an IoT-enabled smart farming ecosystem turning idle farm structures into intelligent, biosecure food production.</p>
+        <p class="footer-motto">Buhì means life. 🌱</p>
+      </div>
+      <div class="footer-section">
+        <h4>Products</h4>
+        <a href="#p-aquasense" data-tab="t-aquasense">AquaSense</a>
+        <a href="#p-autofeed" data-tab="t-autofeed">AutoFeed</a>
+        <a href="#p-water" data-tab="t-water">Water Dispenser + RAS</a>
+        <a href="#sprout">Sprout Pet-Bot</a>
+        <a href="https://buhi-test.vercel.app/" target="_blank" rel="noopener">Web Dashboard</a>
+        <a href="#download" data-apk-link target="_blank" rel="noopener">Android App (APK)</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <a href="mailto:buhi.intellifarm@gmail.com"><i class="fa-solid fa-envelope"></i> buhi.intellifarm@gmail.com</a>
+        <p><i class="fa-solid fa-globe"></i> buhi.intellifarm.com</p>
+        <a href="https://facebook.com/buhi.intellifarm" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i> facebook.com/buhi.intellifarm</a>
+      </div>
+      <div class="footer-section">
+        <h4>Visit the Farm</h4>
+        <p><i class="fa-solid fa-location-dot"></i> Brgy. Bun-od, Cuartero, Capiz, Philippines</p>
+        <a href="#projects"><i class="fa-solid fa-seedling"></i> Project Parugmon</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BUHÌ IntelliFarm Systems. All rights reserved.</p>
+      <p>Made with 💚 in Capiz.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- ======================================================================
+       APK CONFIG  —  EDIT THIS BLOCK WHENEVER YOU UPDATE THE APP
+       Paste your Dropbox link in `url` below. Every Download APK button
+       and link on the page updates automatically.
+       ====================================================================== -->
+  <script>
+    const APK_CONFIG = {
+      // <-- PASTE YOUR DROPBOX LINK HERE
+      url:     'https://www.dropbox.com/scl/fi/qicirrzuukd33rf9b7cfk/Buhi.apk?rlkey=a49hckrbhkftylo72ayoyo114&st=xfe0wlhm&dl=1',
+      version: '1.0.0',      // shown in the download section
+      size:    '~25 MB',     // shown in the download section
+      updated: 'Oct 2026'    // shown in the download section
+    };
+
+    // Makes sure Dropbox links download directly (dl=0 -> dl=1).
+    // Any other link (Drive, GitHub, etc.) is used as pasted.
+    function resolveApkUrl(url) {
+      if (url.includes('dropbox.com')) {
+        if (/[?&]dl=\d/.test(url)) return url.replace(/([?&])dl=\d/, '$1dl=1');
+        return url + (url.includes('?') ? '&' : '?') + 'dl=1';
+      }
+      const m = url.match(/drive\.google\.com\/file\/d\/([^/?#]+)/) ||
+                url.match(/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([^&#]+)/);
+      return m ? 'https://drive.google.com/uc?export=download&id=' + m[1] : url;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const link = resolveApkUrl(APK_CONFIG.url);
+      document.querySelectorAll('[data-apk-link]').forEach(a => a.setAttribute('href', link));
+      const set = (sel, val) => document.querySelectorAll(sel).forEach(el => el.textContent = val);
+      set('[data-apk-version]', APK_CONFIG.version);
+      set('[data-apk-size]', APK_CONFIG.size);
+      set('[data-apk-updated]', APK_CONFIG.updated);
+    });
+  </script>
+
+  <!-- ======================================================================
+       PAGE INTERACTIONS
+       ====================================================================== -->
+  <script>
+    /* ---- 1-second loading screen ---- */
+    (function () {
+      const LOADER_MS = 1000;
+      const start = performance.now();
+      const hide = () => {
+        const loader = document.getElementById('loader');
+        if (!loader || loader.classList.contains('done')) return;
+        loader.classList.add('done');
+        document.body.classList.remove('is-loading');
+        setTimeout(() => loader.remove(), 600);
+        // reveal anything already on screen
+        document.querySelectorAll('#home .reveal').forEach(el => el.classList.add('active'));
+      };
+      // always hide after exactly ~1s from first paint, regardless of slow images
+      setTimeout(hide, Math.max(0, LOADER_MS - (performance.now() - start)));
+    })();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ---- Scroll reveal ---- */
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      } else {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+      }
+
+      /* ---- Header shadow + back-to-top ---- */
+      const header = document.querySelector('header');
+      const toTop = document.querySelector('.to-top');
+      const onScroll = () => {
+        header.classList.toggle('scrolled', window.scrollY > 10);
+        toTop.classList.toggle('show', window.scrollY > 900);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      /* ---- Mobile menu ---- */
+      const toggle = document.querySelector('.menu-toggle');
+      const links = document.getElementById('navLinks');
+      toggle.addEventListener('click', () => {
+        const open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open);
+        toggle.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+      });
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      }));
+
+      /* ---- Product tabs ---- */
+      const tabs = document.querySelectorAll('.product-tab');
+      const selectTab = (tab) => {
+        tabs.forEach(t => t.setAttribute('aria-selected', t === tab ? 'true' : 'false'));
+        document.querySelectorAll('.product-panel').forEach(p => {
+          const on = p.id === tab.getAttribute('aria-controls');
+          p.classList.toggle('active', on);
+          if (on) p.classList.add('reveal', 'active');
+        });
+      };
+      tabs.forEach(tab => tab.addEventListener('click', () => selectTab(tab)));
+      document.querySelectorAll('[data-tab]').forEach(a => a.addEventListener('click', (e) => {
+        e.preventDefault();
+        selectTab(document.getElementById(a.dataset.tab));
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+      }));
+
+      /* ---- Sprout moods ---- */
+      const bot = document.getElementById('bot');
+      const bubbleText = document.getElementById('bubbleText');
+      const bubbleIcon = document.getElementById('bubbleIcon');
+      const moods = {
+        happy:     { text: 'All good! Water pH 7.1, 28°C. Your fish are happy today.', icon: 'fa-solid fa-face-smile' },
+        worried:   { text: 'Heads up: dissolved oxygen is dropping in Pond 2. Check the aerator.', icon: 'fa-solid fa-triangle-exclamation' },
+        sprouting: { text: 'Your lettuce is still sprouting, about 3 weeks to go. Sunny skies today.', icon: 'fa-solid fa-seedling' },
+        harvest:   { text: 'Harvest time! Your tomatoes are ready to pick.', icon: 'fa-solid fa-basket-shopping' }
+      };
+      const moodButtons = document.querySelectorAll('.mood-buttons button');
+      let autoCycle = true;
+      const setMood = (mood) => {
+        bot.className = 'bot ' + mood;
+        bubbleText.textContent = moods[mood].text;
+        bubbleIcon.className = moods[mood].icon;
+        moodButtons.forEach(b => b.classList.toggle('on', b.dataset.mood === mood));
+      };
+      moodButtons.forEach(b => b.addEventListener('click', () => { autoCycle = false; setMood(b.dataset.mood); }));
+      const order = Object.keys(moods);
+      let i = 0;
+      setInterval(() => {
+        if (!autoCycle) return;
+        i = (i + 1) % order.length;
+        setMood(order[i]);
+      }, 3500);
+    });
+  </script>
 </body>
 </html>
