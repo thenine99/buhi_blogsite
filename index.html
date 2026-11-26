@@ -1,1047 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BUHI IntelliFarm - Next-Gen Smart Aquaponics</title>
-
-  <!-- Google Fonts & FontAwesome Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    /* ==========================================================================
-       APPLE / SAMSUNG LIGHT-MODE THEME & DESIGN SYSTEM
-       ========================================================================== */
-    :root {
-      --bg-main: #fafafa;
-      --bg-surface: #ffffff;
-      --bg-subtle: #f1f5f9;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
-      --brand-green: #10b981;
-      --brand-green-dark: #059669;
-      --brand-blue: #0284c7;
-      --brand-gradient: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
-      --border-light: rgba(226, 232, 240, 0.8);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
-      --radius-lg: 24px;
-      --radius-md: 16px;
-      --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background-color: var(--bg-main);
-      color: var(--text-primary);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ==========================================================================
-       SCROLL ANIMATION STYLES (REVEAL ON SCROLL)
-       ========================================================================== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(35px);
-      transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .delay-1 { transition-delay: 0.1s; }
-    .delay-2 { transition-delay: 0.2s; }
-    .delay-3 { transition-delay: 0.3s; }
-
-    /* ==========================================================================
-       HEADER WITH CUSTOMIZABLE bg.png (25% TRANSPARENCY)
-       ========================================================================== */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 1000;
-      border-bottom: 1px solid var(--border-light);
-      overflow: hidden;
-    }
-
-    .header-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      /* EDIT HEADER BACKGROUND IMAGE HERE */
-      background-image: url('bg.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.25; /* 25% Transparency */
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    nav {
-      max-width: 1240px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.1rem 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .logo img {
-      height: 42px;
-      width: auto;
-      border-radius: 8px;
-    }
-
-    .logo-text {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.5px;
-    }
-
-    .logo-text span {
-      background: var(--brand-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-      transition: var(--transition);
-    }
-
-    .nav-links a:hover {
-      color: var(--brand-green-dark);
-    }
-
-    .nav-cta {
-      background: var(--text-primary);
-      color: #fff !important;
-      padding: 0.55rem 1.25rem;
-      border-radius: 50px;
-      transition: var(--transition) !important;
-    }
-
-    .nav-cta:hover {
-      background: var(--brand-green-dark) !important;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
-    }
-
-    /* ==========================================================================
-       HERO SECTION WITH BACKGROUND PHOTO
-       ========================================================================== */
-    .hero {
-      position: relative;
-      padding: 10rem 2rem 6rem;
-      text-align: center;
-      max-width: 100%;
-      margin: 0 auto;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      /* EDIT HERO BACKGROUND PHOTO HERE */
-      background-image: url('hero-bg.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.15; /* Adjust transparency if needed */
-      z-index: -2;
-      pointer-events: none;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(250, 250, 250, 0.85) 0%, rgba(250, 250, 250, 0.95) 100%);
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .hero-content {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0.5rem 1.25rem;
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      color: var(--brand-green-dark);
-      border-radius: 50px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
-    }
-
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -1.5px;
-      margin-bottom: 1.5rem;
-      color: var(--text-primary);
-    }
-
-    .hero h1 span {
-      background: var(--brand-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-secondary);
-      max-width: 880px;
-      margin: 0 auto 2.5rem;
-      font-weight: 400;
-      line-height: 1.7;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .btn {
-      padding: 0.95rem 2.2rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1rem;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary {
-      background: var(--brand-gradient);
-      color: #fff;
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.35);
-    }
-
-    .btn-secondary {
-      background: var(--bg-surface);
-      color: var(--text-primary);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-secondary:hover {
-      background: var(--bg-subtle);
-      transform: translateY(-2px);
-    }
-
-    /* Dark APK download button */
-    .btn-dark {
-      background: var(--text-primary);
-      color: #fff;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
-    }
-
-    .btn-dark:hover {
-      background: var(--brand-green-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.3);
-    }
-
-    .btn-dark i { color: #3ddc84; /* Android green */ }
-
-    /* ==========================================================================
-       GENERAL SECTIONS & CARDS
-       ========================================================================== */
-    section {
-      padding: 6rem 2rem;
-      max-width: 1240px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .section-title p {
-      color: var(--brand-blue);
-      font-size: 0.9rem;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title h2 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      color: var(--text-primary);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-
-    .card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-md);
-      border-color: rgba(16, 185, 129, 0.3);
-    }
-
-    .card i {
-      font-size: 2.2rem;
-      background: var(--brand-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1.2rem;
-      display: inline-block;
-    }
-
-    .card h3 {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-    }
-
-    .card p, .card ul {
-      color: var(--text-secondary);
-      font-size: 0.98rem;
-    }
-
-    .card ul {
-      list-style-type: none;
-      margin-top: 0.8rem;
-    }
-
-    .card ul li {
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .card ul li::before {
-      content: "✓";
-      color: var(--brand-green);
-      font-weight: bold;
-    }
-
-    /* ==========================================================================
-       PRODUCT FEATURE SECTION (AQUASENSE HARDWARE)
-       ========================================================================== */
-    .product-section {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 4rem 3rem;
-      box-shadow: var(--shadow-md);
-    }
-
-    .product-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .product-image-wrapper {
-      position: relative;
-      background: radial-gradient(circle at center, #f8fafc 0%, #e2e8f0 100%);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem;
-      text-align: center;
-      border: 1px solid var(--border-light);
-    }
-
-    .product-image-wrapper img {
-      max-width: 100%;
-      height: auto;
-      border-radius: var(--radius-md);
-      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.12));
-      transition: var(--transition);
-    }
-
-    .product-image-wrapper:hover img {
-      transform: scale(1.03);
-    }
-
-    .badge-pill {
-      display: inline-block;
-      padding: 0.35rem 0.9rem;
-      background: rgba(2, 132, 199, 0.1);
-      color: var(--brand-blue);
-      border-radius: 50px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-
-    .indicator-list {
-      display: flex;
-      gap: 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .status-dot {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    .dot.green { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
-    .dot.blue { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
-    .dot.yellow { background: #eab308; box-shadow: 0 0 8px #eab308; }
-
-    /* ==========================================================================
-       APP & WEBSITE SHOWCASE SECTION
-       ========================================================================== */
-    .app-showcase {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #fff;
-      border-radius: var(--radius-lg);
-      padding: 4.5rem 3rem;
-      box-shadow: var(--shadow-lg);
-      margin-top: 3rem;
-    }
-
-    .app-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .app-info h3 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-
-    .app-info p {
-      color: #94a3b8;
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-    }
-
-    .app-preview-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-md);
-      padding: 1.5rem;
-      backdrop-filter: blur(10px);
-      text-align: center;
-    }
-
-    .app-preview-card img {
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    /* ==========================================================================
-       APK DOWNLOAD SECTION
-       ========================================================================== */
-    #download { padding-top: 2rem; }
-
-    .download-section {
-      position: relative;
-      overflow: hidden;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 4rem 3rem;
-      box-shadow: var(--shadow-md);
-    }
-
-    .download-section::before {
-      content: "";
-      position: absolute;
-      top: -140px;
-      right: -140px;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      background: var(--brand-gradient);
-      opacity: 0.08;
-      pointer-events: none;
-    }
-
-    .download-container {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .download-info h2 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.8px;
-      margin: 0.4rem 0 1rem;
-    }
-
-    .download-info > p {
-      color: var(--text-secondary);
-      font-size: 1.05rem;
-      margin-bottom: 1.8rem;
-    }
-
-    .apk-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-    }
-
-    .apk-meta span {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0.45rem 1rem;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-light);
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
-
-    .apk-meta i { color: var(--brand-green-dark); }
-
-    .install-steps {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 2rem;
-    }
-
-    .install-steps h4 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 1.2rem;
-    }
-
-    .install-steps ol {
-      list-style: none;
-      counter-reset: step;
-    }
-
-    .install-steps li {
-      counter-increment: step;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      margin-bottom: 0.9rem;
-      font-size: 0.93rem;
-      color: var(--text-secondary);
-    }
-
-    .install-steps li:last-child { margin-bottom: 0; }
-
-    .install-steps li::before {
-      content: counter(step);
-      flex: 0 0 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: var(--brand-gradient);
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .download-note {
-      margin-top: 1.2rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    /* ==========================================================================
-       SPLIT CONTENT SECTION (PARUGMON / STORY)
-       ========================================================================== */
-    .split-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .split-image img {
-      width: 100%;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--border-light);
-    }
-
-    /* ==========================================================================
-       FOOTER
-       ========================================================================== */
-    footer {
-      background: #ffffff;
-      border-top: 1px solid var(--border-light);
-      padding: 4rem 2rem 2rem;
-      margin-top: 4rem;
-    }
-
-    .footer-content {
-      max-width: 1240px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
-
-    .footer-section h4 {
-      color: var(--text-primary);
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .footer-section p, .footer-section a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.6rem;
-      font-size: 0.95rem;
-      transition: var(--transition);
-    }
-
-    .footer-section a:hover {
-      color: var(--brand-green-dark);
-    }
-
-    .footer-bottom {
-      max-width: 1240px;
-      margin: 0 auto;
-      border-top: 1px solid var(--border-light);
-      padding-top: 2rem;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* ==========================================================================
-       RESPONSIVE BREAKPOINTS
-       ========================================================================== */
-    @media (max-width: 992px) {
-      .hero h1 { font-size: 2.8rem; }
-      .product-container, .app-container, .split-container, .download-container { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero h1 { font-size: 2.2rem; }
-      .hero { padding-top: 7rem; }
-      .download-section { padding: 2.5rem 1.5rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Maintenance</title>
+    <style>
+        /* CSS Variables for clean theming and easy customization (Defaults to sleek dark mode, adapts to light mode if preferred) */
+        :root {
+            --bg-gradient-start: #0f172a;
+            --bg-gradient-end: #020617;
+            --card-bg: rgba(30, 41, 59, 0.75);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --badge-bg: rgba(56, 189, 248, 0.1);
+            --badge-border: rgba(56, 189, 248, 0.3);
+        }
+
+        /* Light mode adaptation for users with light system preferences */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-gradient-start: #f1f5f9;
+                --bg-gradient-end: #e2e8f0;
+                --card-bg: rgba(255, 255, 255, 0.9);
+                --card-border: rgba(15, 23, 42, 0.08);
+                --text-primary: #0f172a;
+                --text-secondary: #475569;
+                --accent-color: #0284c7;
+                --accent-glow: rgba(2, 132, 199, 0.15);
+                --badge-bg: rgba(2, 132, 199, 0.08);
+                --badge-border: rgba(2, 132, 199, 0.25);
+            }
+        }
+
+        /* Reset & Base Typography */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            background: radial-gradient(circle at top center, var(--bg-gradient-start), var(--bg-gradient-end));
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Main Card Container */
+        .maintenance-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 1.5rem;
+            padding: 3.5rem 2.5rem;
+            max-width: 560px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Animated Gear Icon Wrapper */
+        .icon-wrapper {
+            position: relative;
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* Primary & Secondary Gear SVG Styling */
+        .gear-primary {
+            width: 44px;
+            height: 44px;
+            color: var(--accent-color);
+            animation: spinClockwise 12s linear infinite;
+            transform-origin: center;
+        }
+
+        .gear-secondary {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            width: 24px;
+            height: 24px;
+            color: var(--accent-color);
+            opacity: 0.8;
+            animation: spinCounterClockwise 8s linear infinite;
+            transform-origin: center;
+        }
+
+        /* Status Pill */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.875rem;
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 1.25rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Main Heading */
+        h1 {
+            font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* Highlighted Return Date Subheading */
+        .return-message {
+            font-size: clamp(1.125rem, 2.5vw, 1.35rem);
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Supporting Description */
+        .description {
+            font-size: 0.975rem;
+            color: var(--text-secondary);
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        /* Keyframe Animations */
+        @keyframes spinClockwise {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes spinCounterClockwise {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.85);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .maintenance-card {
+                padding: 2.5rem 1.5rem;
+                border-radius: 1.25rem;
+            }
+
+            .icon-wrapper {
+                width: 76px;
+                height: 76px;
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- NAVIGATION BAR WITH DYNAMIC bg.png BACKGROUND -->
-  <header>
-    <div class="header-bg"></div>
-
-    <nav>
-      <a href="#" class="logo">
-        <img src="logo.png" alt="BUHI IntelliFarm Logo" onerror="this.src='https://via.placeholder.com/42x42/10b981/ffffff?text=B'">
-        <span class="logo-text">BUHÌ <span>IntelliFarm</span></span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#product">Hardware Device</a></li>
-        <li><a href="#app">Cloud Dashboard</a></li>
-        <li><a href="#download">Download App</a></li>
-        <li><a href="#mission">Vision & Mission</a></li>
-        <li><a href="#commodities">Produce</a></li>
-        <li><a href="https://buhi-test.vercel.app/" target="_blank" class="nav-cta">Launch App <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- HERO SECTION WITH BACKGROUND PHOTO -->
-  <section class="hero" id="home">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <div class="hero-badge reveal">
-        <i class="fa-solid fa-microchip"></i> Next-Gen IoT Smart Farm Systems
-      </div>
-
-      <h1 class="reveal delay-1">
-        Reinventing Agriculture with <span>Intelligent Farming</span>
-      </h1>
-
-      <p class="reveal delay-2">
-        <strong>OUR STORY</strong> – BUHI IntelliFarm idea started when ASF affected our community that led to a considerable number of abandoned pigpens. Having a background of Agricultural and Biosystems Engineering and Computer Science, our team as children of backyard farmers wanted to transform these underutilized and ASF-affected pig pens into biosecure, high-yield aquaponics facilities powered by continuous IoT water telemetry and real-time monitoring devices and automated system.
-      </p>
-
-      <div class="btn-group reveal delay-3">
-        <a href="#product" class="btn btn-primary"><i class="fa-solid fa-box-open"></i> Discover Hardware</a>
-        <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-desktop"></i> Try Live App</a>
-        <!-- APK download button (link is set in the APK CONFIG at the bottom of this file) -->
-        <a href="#download" data-apk-link target="_blank" rel="noopener" class="btn btn-dark"><i class="fa-brands fa-android"></i> Download APK</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- HARDWARE SECTION -->
-  <section id="product">
-    <div class="product-section reveal">
-      <div class="product-container">
-        <div class="product-image-wrapper">
-          <img src="aquasense.jpeg" alt="BUHI AquaSense IoT Hardware Device" onerror="this.src='https://via.placeholder.com/500x500?text=INSERT+hardware-img.png+HERE'">
-        </div>
-        <div class="product-details">
-          <span class="badge-pill">IoT HARDWARE UNIT</span>
-          <h2>AquaSense IoT Controller</h2>
-          <p style="color: var(--text-secondary); font-size: 1.05rem; margin-top: 0.8rem;">
-            Our proprietary, ruggedized hardware module designed for industrial and backyard smart farm environments. Equipped with multi-probe sensor arrays and integrated wireless communication modules.
-          </p>
-
-          <div class="indicator-list">
-            <div class="status-dot"><span class="dot green"></span> SYSTEM ON</div>
-            <div class="status-dot"><span class="dot blue"></span> IOT ACTIVE</div>
-            <div class="status-dot"><span class="dot yellow"></span> DATA LOGGING</div>
-          </div>
-
-          <div style="margin-top: 1.5rem;">
-            <div style="display: flex; gap: 12px; margin-bottom: 0.8rem; align-items: center;">
-              <i class="fa-solid fa-wifi" style="color: var(--brand-blue);"></i>
-              <span style="font-weight: 600; font-size: 0.95rem;">Dual Connectivity: WiFi & IoT Antenna</span>
-            </div>
-            <div style="display: flex; gap: 12px; margin-bottom: 0.8rem; align-items: center;">
-              <i class="fa-solid fa-vial-circle-check" style="color: var(--brand-green);"></i>
-              <span style="font-weight: 600; font-size: 0.95rem;">Multi-Sensor Interface (pH, Temp, DO, Water Level)</span>
-            </div>
-            <div style="display: flex; gap: 12px; align-items: center;">
-              <i class="fa-solid fa-bolt" style="color: var(--brand-blue);"></i>
-              <span style="font-weight: 600; font-size: 0.95rem;">Automated Filtration & Pump Controller Triggers</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- APP & WEBSITE DASHBOARD SHOWCASE -->
-  <section id="app">
-    <div class="app-showcase reveal">
-      <div class="app-container">
-        <div class="app-info">
-          <span style="color: var(--brand-green); font-weight: 800; font-size: 0.85rem; letter-spacing: 1px;">WEB & MOBILE DASHBOARD</span>
-          <h3 style="margin-top: 0.5rem;">Manage Your Farm from Anywhere</h3>
-          <p>Gain total control over water quality parameters, automated pump cycles, and environmental metrics in real-time through our intuitive cloud application.</p>
-          <div class="btn-group" style="justify-content: flex-start;">
-            <a href="https://buhi-test.vercel.app/" target="_blank" class="btn btn-primary">
-              Access Dashboard <i class="fa-solid fa-arrow-right"></i>
-            </a>
-            <a href="#download" class="btn btn-secondary">
-              <i class="fa-brands fa-android" style="color:#3ddc84;"></i> Get the Android App
-            </a>
-          </div>
-        </div>
-        <div class="app-preview-card">
-          <img src="dashboard.jpg" alt="BUHI Web Dashboard Interface" onerror="this.src='https://via.placeholder.com/600x380/0f172a/ffffff?text=BUHI+Web+App+Interface'">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DOWNLOAD APP (APK) SECTION -->
-  <section id="download">
-    <div class="download-section reveal">
-      <div class="download-container">
-        <div class="download-info">
-          <span class="badge-pill"><i class="fa-brands fa-android"></i> ANDROID APP</span>
-          <h2>Download the BUHÌ IntelliFarm App</h2>
-          <p>Install the Android app to monitor water quality, control pumps and receive farm alerts right from your phone — even in the field.</p>
-
-          <!-- These values are filled in from the APK CONFIG at the bottom of the file -->
-          <div class="apk-meta">
-            <span><i class="fa-solid fa-code-branch"></i> Version <b data-apk-version>1.0.0</b></span>
-            <span><i class="fa-solid fa-hard-drive"></i> <b data-apk-size>~25 MB</b></span>
-            <span><i class="fa-solid fa-calendar-check"></i> Updated <b data-apk-updated>2026</b></span>
-            <span><i class="fa-brands fa-android"></i> Android 8.0+</span>
-          </div>
-
-          <a href="#download" data-apk-link target="_blank" rel="noopener" class="btn btn-primary">
-            <i class="fa-solid fa-download"></i> Download APK
-          </a>
-          <p class="download-note"><i class="fa-solid fa-shield-halved"></i> Direct download from the official BUHÌ IntelliFarm website.</p>
+    <main class="maintenance-card" role="main">
+        <!-- Animated Dual Gear SVG Icon -->
+        <div class="icon-wrapper" aria-hidden="true">
+            <svg class="gear-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <svg class="gear-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
         </div>
 
-        <div class="install-steps">
-          <h4><i class="fa-solid fa-list-check" style="color: var(--brand-blue); margin-right: 6px;"></i> How to install</h4>
-          <ol>
-            <li>Tap <strong>&nbsp;Download&nbsp;</strong> and wait for the file to finish.</li>
-            <li>Open the downloaded <strong>&nbsp;APK file&nbsp;</strong> from your notifications or Files app.</li>
-            <li>If asked, allow <strong>&nbsp;Install unknown apps&nbsp;</strong> for your browser or file manager.</li>
-            <li>Tap <strong>&nbsp;Install&nbsp;</strong>, then open BUHÌ IntelliFarm and log in.</li>
-          </ol>
+        <!-- Status Indicator -->
+        <div class="status-pill">
+            <span class="status-dot"></span>
+            <span>Scheduled Upgrade</span>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- PARUGMON / STORY SECTION -->
-  <section id="about">
-    <div class="section-title reveal">
-      <p>BACKGROUND & RATIONALE</p>
-      <h2>An Inspiration from traditional fishing - Parugmon</h2>
-    </div>
-    <div class="split-container">
-      <div class="split-text reveal delay-1">
-        <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-          African Swine Fever (ASF) left vast agricultural structures unused across rural communities. <strong>BUHÌ IntelliFarm</strong> addresses this crisis by transforming abandoned pig pens into clean, biosecure, intelligent aquaponics installations.
+        <!-- Main Heading -->
+        <h1>SERVER MAINTENANCE</h1>
+
+        <!-- Return Date Subheading -->
+        <p class="return-message">We'll be back on December 1, 2026</p>
+
+        <!-- Helpful Context -->
+        <p class="description">
+            We are currently performing scheduled infrastructure upgrades to improve performance and reliability. Thank you for your patience.
         </p>
-        <p style="font-size: 1rem; color: var(--text-secondary);">
-          Initiated at <strong>Brgy. Bun-od, Cuartero, Capiz</strong>, our project minimizes labor, optimizes resource consumption, and promotes climate-resilient local food production through automated telemetry.
-        </p>
-      </div>
-      <div class="split-image reveal delay-2">
-        <img src="parugmon.jpg" alt="Parugmon Pig Pen Rehabilitation" onerror="this.src='https://via.placeholder.com/600x400/f1f5f9/475569?text=INSERT+parugmon-img.png+HERE'">
-      </div>
-    </div>
-  </section>
+    </main>
 
-  <!-- VISION & MISSION -->
-  <section id="mission">
-    <div class="section-title reveal">
-      <p>OUR STRATEGIC GOALS</p>
-      <h2>Vision & Mission</h2>
-    </div>
-    <div class="grid">
-      <div class="card reveal delay-1">
-        <i class="fa-solid fa-eye"></i>
-        <h3>Our Vision</h3>
-        <p>To establish BUHÌ IntelliFarm as Western Visayas' Premier Research, breeding, and demonstration hub for native freshwater species and sustainable smart agriculture.</p>
-      </div>
-      <div class="card reveal delay-2">
-        <i class="fa-solid fa-bullseye"></i>
-        <h3>Our Mission</h3>
-        <p>To equip smallholder farmers with accessible, scalable IIoT technology that improves productivity, reduces manual intervention, and protects local ecosystems.</p>
-      </div>
-      <div class="card reveal delay-3">
-        <i class="fa-solid fa-shield-halved"></i>
-        <h3>Value Proposition</h3>
-        <p>Continuous automated water monitoring, dynamic filtration, and automated refilling ensure pristine conditions for aquatic life and premium crops.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMMODITIES & RESEARCH -->
-  <section id="commodities">
-    <div class="section-title reveal">
-      <p>CULTIVATED PRODUCE & FISH</p>
-      <h2>Farm Commodities & Native Species</h2>
-    </div>
-    <div class="grid">
-      <div class="card reveal delay-1">
-        <i class="fa-solid fa-fish-fins"></i>
-        <h3>Native & High-Value Fish</h3>
-        <p>A breeding and research hub for local freshwater species:</p>
-        <ul>
-          <li>Giant Freshwater Prawn (ULANG)</li>
-          <li>Catfish (PANTAT)</li>
-          <li>TILAPIA</li>
-          <li>Native Upland Mudfish (BATOD)</li>
-          <li>Native Upland Carp (KARPA)</li>
-          <li>Rami, Bagtis, Puyo, etc</li>
-        </ul>
-      </div>
-      <div class="card reveal delay-2">
-        <i class="fa-solid fa-seedling"></i>
-        <h3>Greens-Vegetables</h3>
-        <p>Clean, nutrient-rich produce nourished by recycled aquaponics water:</p>
-        <ul>
-          <li>Fresh Premium Lettuce</li>
-          <li>Pechay & Kangkong</li>
-          <li>Culinary Herbs</li>
-          <li>Microgreens</li>
-        </ul>
-      </div>
-      <div class="card reveal delay-3">
-        <i class="fa-solid fa-chart-line"></i>
-        <h3>Business Viability</h3>
-        <p>Empowered by funding grants and scalable revenue models:</p>
-        <ul>
-          <li>170% Projected ROI</li>
-          <li>1.5 - 2 Years Payback Period</li>
-          <li>Dual Revenue: Produce & IoT Hardware Installation</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer id="contact">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h4>BUHÌ IntelliFarm</h4>
-        <p>IoT-enabled Smart Farm Management System transforming idle agricultural infrastructure into intelligent food production facilities.</p>
-      </div>
-      <div class="footer-section">
-        <h4>Quick Links</h4>
-        <a href="#about">About Project</a>
-        <a href="#product">AquaSense IoT Unit</a>
-        <a href="https://buhi-test.vercel.app/" target="_blank">Web Dashboard</a>
-        <a href="#download" data-apk-link target="_blank" rel="noopener">Download Android App (APK)</a>
-        <a href="#mission">Vision & Mission</a>
-      </div>
-      <div class="footer-section">
-        <h4>Contact & Channels</h4>
-        <p><i class="fa-solid fa-envelope"></i> buhi.intellifarm@gmail.com </p>
-        <p><i class="fa-solid fa-globe"></i> buhi.intellifarm.com </p>
-        <p><i class="fa-brands fa-facebook"></i> facebook.com/buhi.intellifarm </p>
-      </div>
-      <div class="footer-section">
-        <h4>Location</h4>
-        <p><i class="fa-solid fa-location-dot"></i> Brgy. Bun-od, Cuartero, Capiz, Philippines </p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 BUHÌ IntelliFarm. All Rights Reserved.</p>
-    </div>
-  </footer>
-
-  <!-- ======================================================================
-       APK CONFIG  —  EDIT THIS BLOCK WHENEVER YOU UPDATE THE APP
-       Paste your Dropbox link in `url` below. Every Download APK button
-       and link on the page updates automatically.
-       ====================================================================== -->
-  <script>
-    const APK_CONFIG = {
-      // <-- PASTE YOUR DROPBOX LINK HERE
-      url:     'https://www.dropbox.com/scl/fi/qicirrzuukd33rf9b7cfk/Buhi.apk?rlkey=a49hckrbhkftylo72ayoyo114&st=xfe0wlhm&dl=1',
-      version: '1.0.0',      // shown in the download section
-      size:    '~25 MB',     // shown in the download section
-      updated: 'Oct 2026'    // shown in the download section
-    };
-
-    // Makes sure Dropbox links download directly (dl=0 -> dl=1).
-    // Any other link (Drive, GitHub, etc.) is used as pasted.
-    function resolveApkUrl(url) {
-      if (url.includes('dropbox.com')) {
-        if (/[?&]dl=\d/.test(url)) return url.replace(/([?&])dl=\d/, '$1dl=1');
-        return url + (url.includes('?') ? '&' : '?') + 'dl=1';
-      }
-      const m = url.match(/drive\.google\.com\/file\/d\/([^/?#]+)/) ||
-                url.match(/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([^&#]+)/);
-      return m ? 'https://drive.google.com/uc?export=download&id=' + m[1] : url;
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const link = resolveApkUrl(APK_CONFIG.url);
-      document.querySelectorAll('[data-apk-link]').forEach(a => a.setAttribute('href', link));
-      const set = (sel, val) => document.querySelectorAll(sel).forEach(el => el.textContent = val);
-      set('[data-apk-version]', APK_CONFIG.version);
-      set('[data-apk-size]', APK_CONFIG.size);
-      set('[data-apk-updated]', APK_CONFIG.updated);
-    });
-  </script>
-
-  <!-- SCROLL REVEAL SCRIPT -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('active');
-        });
-      }, { root: null, rootMargin: '0px', threshold: 0.15 });
-
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    });
-  </script>
 </body>
 </html>
